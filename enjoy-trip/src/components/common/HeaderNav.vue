@@ -47,12 +47,33 @@
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto">
+          <b-nav-item
+            ><div class="navbar-dark">{{ message }}</div></b-nav-item
+          >
           <b-nav-item-dropdown right>
             <template #button-content>
               <b-icon icon="person" font-scale="2" variant="dark"></b-icon>
             </template>
-            <b-dropdown-item href="#">회원가입</b-dropdown-item>
-            <b-dropdown-item href="#">로그인</b-dropdown-item>
+            <b-dropdown-item v-show="!loginCheck"
+              ><router-link :to="{ name: 'join' }"
+                >회원가입</router-link
+              ></b-dropdown-item
+            >
+            <b-dropdown-item v-show="!loginCheck"
+              ><router-link :to="{ name: 'login' }"
+                >로그인</router-link
+              ></b-dropdown-item
+            >
+            <b-dropdown-item v-show="loginCheck"
+              ><router-link :to="{ name: '' }"
+                >사용자정보</router-link
+              ></b-dropdown-item
+            >
+            <b-dropdown-item v-show="loginCheck"
+              ><router-link :to="{ name: '' }"
+                >로그아웃</router-link
+              ></b-dropdown-item
+            >
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -61,7 +82,53 @@
 </template>
 
 <script>
-export default {};
+import { mapGetters } from "vuex";
+
+export default {
+  date() {
+    return {
+      loginCheck: false,
+      isadmin: false,
+    };
+  },
+  computed: {
+    ...mapGetters(["checkLoginUser"]),
+    message() {
+      if (this.checkLoginUser == null) {
+        return null;
+      } else {
+        return "안녕하세요 " + this.checkLoginUser + " 님";
+      }
+    },
+  },
+  methods: {
+    loginCheck() {
+      let userid = sessionStorage.getItem("userid");
+      let isadmin = sessionStorage.getItem("isadmin");
+      console.log(
+        "sessionStorage => userid: " + userid + " / isadmin: " + isadmin
+      );
+      if (userid == null) {
+        console.log("로그아웃");
+        this.loginCheck = false;
+      } else if (isadmin == 1) {
+        console.log("관리자 로그인");
+        this.loginCheck = true;
+      } else {
+        console.log("로그인");
+        this.loginCheck = true;
+      }
+    },
+  },
+  created() {
+    this.loginCheck();
+  },
+};
 </script>
 
-<style></style>
+<style>
+.navbar-dark {
+  color: black !important;
+  text-align: center;
+}
+</style>
