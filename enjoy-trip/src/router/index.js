@@ -48,6 +48,39 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/qna",
+    name: "qna",
+    component: () => import("@/views/QnaView"),
+    redirect: "/qna/list",
+    children: [
+      {
+        path: "list",
+        name: "QnaList",
+        component: () => import("@/components/qna/QnaList"),
+      },
+      {
+        path: "write",
+        name: "QnaCreate",
+        component: () => import("@/components/qna/QnaCreate"),
+      },
+      {
+        path: "detail/:qnano",
+        name: "QnaDetail",
+        component: () => import("@/components/qna/QnaDetail"),
+      },
+      {
+        path: "modify/:qnano",
+        name: "QnaModify",
+        component: () => import("@/components/qna/QnaModify"),
+      },
+      {
+        path: "delete/:qnano",
+        name: "QnaDelete",
+        component: () => import("@/components/qna/QnaDelete"),
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({
