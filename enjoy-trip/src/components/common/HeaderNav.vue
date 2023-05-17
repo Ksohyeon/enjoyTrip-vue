@@ -18,7 +18,7 @@
         <b-navbar-nav>
           <b-nav-item href="#">
             <b-icon icon="map" font-scale="1" variant="dark"></b-icon>
-            <router-link :to="{ name: '' }" class="link"
+            <router-link :to="{ name: 'map' }" class="link"
               >&#9;여행지 검색</router-link
             ></b-nav-item
           >
