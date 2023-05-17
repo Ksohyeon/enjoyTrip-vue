@@ -65,15 +65,18 @@
               ></b-dropdown-item
             >
             <b-dropdown-item v-show="loginCheck"
-              ><router-link :to="{ name: '' }"
+              ><router-link :to="{ name: 'userinfo' }"
                 >사용자정보</router-link
               ></b-dropdown-item
             >
-            <b-dropdown-item v-show="loginCheck"
-              ><router-link :to="{ name: '' }"
-                >로그아웃</router-link
-              ></b-dropdown-item
-            >
+            <b-dropdown-item v-show="loginCheck">
+              <b-button
+                v-show="loginCheck"
+                variant="white"
+                @click.prevent="logout"
+                >로그아웃</b-button
+              >
+            </b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -82,7 +85,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   date() {
@@ -92,16 +95,18 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["checkLoginUser"]),
     message() {
-      if (this.checkLoginUser == null) {
+      let userid = sessionStorage.getItem("userid");
+      console.log(userid);
+      if (userid == null) {
         return null;
       } else {
-        return "안녕하세요 " + this.checkLoginUser + " 님";
+        return "안녕하세요 " + userid + " 님";
       }
     },
   },
   methods: {
+    ...mapActions(["logoutMember"]),
     loginCheck() {
       let userid = sessionStorage.getItem("userid");
       let isadmin = sessionStorage.getItem("isadmin");
@@ -118,6 +123,20 @@ export default {
         console.log("로그인");
         this.loginCheck = true;
       }
+    },
+    logout() {
+      console.log("logout method 실행");
+      let thiz = this;
+      this.logoutMember({
+        callback: function (status) {
+          console.log(status);
+          if (status == 200) {
+            thiz.$router.push({ name: "main" });
+            window.location.reload();
+          }
+        },
+      });
+      window.location.reload();
     },
   },
   created() {

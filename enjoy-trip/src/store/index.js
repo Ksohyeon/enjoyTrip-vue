@@ -7,11 +7,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userId: null,
+    userInfo: null,
   },
   getters: {
-    checkLoginUser: function (state) {
-      return state.userId;
+    getUserInfo: function (state) {
+      return state.userInfo;
     },
   },
   mutations: {
@@ -24,8 +24,14 @@ export default new Vuex.Store({
       sessionStorage.setItem("isadmin", payload.loginuser.admin);
       console.log("저장된 유저 아이디: " + sessionStorage.getItem("userid"));
 
-      this.state.userId = payload.loginuser.userId;
       // console.log("state: ", state);
+    },
+    LOGOUT() {
+      sessionStorage.clear();
+    },
+    SELECT_MEMBER(state, payload) {
+      this.state.userInfo = payload.user;
+      console.log("userinfo", this.state.userInfo);
     },
   },
   actions: {
@@ -58,6 +64,40 @@ export default new Vuex.Store({
         .catch((response) => {
           payload.callback(response.status);
         });
+    },
+    logoutMember(context, payload) {
+      http.get(`/user/logout`).then((response) => {
+        context.commit({
+          type: "LOGOUT",
+        });
+        // console.log("status: ", status);
+        payload.callback(response.status);
+      });
+    },
+    selectMember(context) {
+      let userId = sessionStorage.getItem("userid");
+      http.get(`/user/${userId}`).then((response) => {
+        console.log(response);
+        context.commit({
+          type: "SELECT_MEMBER",
+          user: response.data,
+        });
+      });
+    },
+    modifyMember(context, payload) {
+      console.log("user:", payload);
+      http.put(`/user/update`, payload).then(({ data, status }) => {
+        console.log("응답: ", data, status);
+        payload.callback(status);
+      });
+    },
+    deleteMember(context, payload) {
+      let userid = sessionStorage.getItem("userid");
+      http.delete(`/user/${userid}`).then(({ data, status }) => {
+        console.log("응답: ", data, status);
+        payload.callback(status);
+        sessionStorage.clear();
+      });
     },
   },
   modules: {},
