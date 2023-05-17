@@ -44,6 +44,16 @@
               >&#9;지역별 채팅방</router-link
             ></b-nav-item
           >
+          <b-nav-item href="#"
+            ><b-icon
+              icon="patch-question"
+              font-scale="1"
+              variant="dark"
+            ></b-icon
+            ><router-link :to="{ name: 'qna' }" class="link"
+              >&#9;QnA</router-link
+            ></b-nav-item
+          >
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto">
@@ -77,7 +87,6 @@
                 >로그아웃</b-button
               >
             </b-dropdown-item>
-
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -103,7 +112,6 @@ export default {
         return null;
       } else {
         return "안녕하세요 " + userid + " 님";
-
       }
     },
   },

@@ -15,6 +15,14 @@ Vue.use(IconsPlugin);
 
 Vue.config.productionTip = false;
 
+Vue.filter("enterToBr", (value) => {
+  if (!value) {
+    return value;
+  }
+  // 문자열에 enter값을 <br />로 변경.(html상에서 줄바꿈 처리)
+  return value.replace(/(?:\r\n|\r|\n)/g, "<br />");
+});
+
 new Vue({
   router,
   store,
