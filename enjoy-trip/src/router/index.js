@@ -36,6 +36,20 @@ const routes = [
       },
     ],
   },
+    ],
+  },
+  {
+    path: "/trip",
+    name: "trip",
+    component: () => import("@/views/TripView"),
+    children: [
+      {
+        path: "map",
+        name: "map",
+        component: () => import("@/components/trip/TripMap"),
+      },
+    ]
+  }
 ];
 
 const router = new VueRouter({

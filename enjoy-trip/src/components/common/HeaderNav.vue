@@ -18,7 +18,7 @@
         <b-navbar-nav>
           <b-nav-item href="#">
             <b-icon icon="map" font-scale="1" variant="dark"></b-icon>
-            <router-link :to="{ name: '' }" class="link"
+            <router-link :to="{ name: 'map' }" class="link"
               >&#9;여행지 검색</router-link
             ></b-nav-item
           >
@@ -77,6 +77,7 @@
                 >로그아웃</b-button
               >
             </b-dropdown-item>
+
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -102,6 +103,7 @@ export default {
         return null;
       } else {
         return "안녕하세요 " + userid + " 님";
+
       }
     },
   },
