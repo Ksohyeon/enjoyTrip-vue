@@ -44,6 +44,12 @@
               >&#9;지역별 채팅방</router-link
             ></b-nav-item
           >
+          <b-nav-item href="#"
+            ><b-icon icon="question-octagon" font-scale="1" variant="dark"></b-icon
+            ><router-link :to="{ name: 'boardlist' }" class="link"
+              >&#9;QnA</router-link
+            ></b-nav-item
+          >
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto">
