@@ -1,6 +1,10 @@
 <template>
-  <div>Main</div>
-  <div class="container bg-image" :style="`background-image: url(${imageUrl})` " >
+  <div>
+    <div>Main</div>
+    <div
+      class="container bg-image"
+      :style="`background-image: url(${imageUrl})`"
+    ></div>
   </div>
 </template>
 
@@ -8,13 +12,9 @@
 export default {
   name: "MainView",
   components: {},
-};
-</script>
-
-<style></style>
   data() {
     return {
-      imageUrl: require('@/assets/img/mainpage.png'), // 이미지 파일 경로 수정
+      imageUrl: require("@/assets/img/mainpage.png"), // 이미지 파일 경로 수정
     };
   },
 };

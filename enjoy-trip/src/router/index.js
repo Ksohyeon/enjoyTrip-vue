@@ -36,8 +36,6 @@ const routes = [
       },
     ],
   },
-    ],
-  },
   {
     path: "/trip",
     name: "trip",
@@ -48,8 +46,8 @@ const routes = [
         name: "map",
         component: () => import("@/components/trip/TripMap"),
       },
-    ]
-  }
+    ],
+  },
 ];
 
 const router = new VueRouter({
