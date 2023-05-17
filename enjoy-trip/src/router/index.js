@@ -24,6 +24,16 @@ const routes = [
         name: "join",
         component: () => import("@/components/member/MemberJoin"),
       },
+      {
+        path: "userinfo",
+        name: "userinfo",
+        component: () => import("@/components/member/MemberInfo"),
+      },
+      {
+        path: "modifyInfo",
+        name: "modifyInfo",
+        component: () => import("@/components/member/MemberModifyInfo"),
+      },
     ],
   },
   {
@@ -36,8 +46,8 @@ const routes = [
         name: "map",
         component: () => import("@/components/trip/TripMap"),
       },
-    ]
-  }
+    ],
+  },
 ];
 
 const router = new VueRouter({

@@ -87,7 +87,6 @@ export default {
           if (status == 200) {
             thiz.$router.push({ name: "main" });
             window.location.reload();
-            console.log(thiz.$store);
           }
         },
       });
