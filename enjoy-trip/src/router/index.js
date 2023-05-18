@@ -46,6 +46,11 @@ const routes = [
         name: "map",
         component: () => import("@/components/trip/TripMap"),
       },
+      {
+        path: "detail",
+        name: "TripDetail",
+        component: () => import("@/components/trip/TripDetail"),
+      },
     ],
   },
   {
