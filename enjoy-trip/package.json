@@ -1,4 +1,13 @@
-{
+{ "scripts": {
+  "init-husky": "npx husky install .husky",
+  "lint-front": "lint-staged"
+},
+"lint-staged": {
+  "src/**/*.{js,json,md}": [
+    "prettier --write",
+    "git add"
+  ]
+},
   "name": "enjoy-trip",
   "version": "0.1.0",
   "private": true,
