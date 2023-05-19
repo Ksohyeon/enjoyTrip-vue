@@ -51,6 +51,58 @@
           <div class="searchadd">
             <h5 class="mt-2">나의 여행 코스!!!</h5>
             <h6>원하는 장소를 검색해 추가하세요</h6>
+            <b-input-group prepend="제목">
+              <b-input v-model="title"></b-input>
+            </b-input-group>
+            <b-input-group prepend="테마">
+              <b-dropdown class="m-md-2">
+                <b-dropdown-item>나홀로여행</b-dropdown-item>
+                <b-dropdown-item>가족여행</b-dropdown-item>
+                <b-dropdown-item>친구와여행</b-dropdown-item>
+                <b-dropdown-item>커플여행</b-dropdown-item>
+              </b-dropdown>
+            </b-input-group>
+            <b-input-group prepend="날짜">
+              <!-- 시작날짜 -->
+              <b-form-input
+                id="startdate-input"
+                v-model="startdate"
+                type="text"
+                placeholder="YYYY-MM-DD"
+                autocomplete="off"
+              ></b-form-input>
+              <b-input-group-append>
+                <b-form-datepicker
+                  v-model="startdate"
+                  button-only
+                  right
+                  locale="en-US"
+                  aria-controls="startdate-input"
+                ></b-form-datepicker>
+              </b-input-group-append>
+              <span class="text1">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
+              <!-- 종료날짜 -->
+              <b-form-input
+                id="enddate-input"
+                v-model="enddate"
+                type="text"
+                placeholder="YYYY-MM-DD"
+                autocomplete="off"
+              ></b-form-input>
+              <b-input-group-append>
+                <b-form-datepicker
+                  v-model="enddate"
+                  button-only
+                  right
+                  locale="en-US"
+                  aria-controls="enddate-input"
+                ></b-form-datepicker>
+              </b-input-group-append>
+            </b-input-group>
+            <b-input-group prepend="내용">
+              <b-textarea v-model="content"></b-textarea>
+            </b-input-group>
+            <b-button class="mt-3" @click="registPlan">계획 추가</b-button>
             <!-- 계획 추가 테이블 -->
             <plan-list @mapreload="displayMarker"></plan-list>
           </div>
@@ -68,13 +120,17 @@ import PlanList from "@/components/plan/PlanList.vue";
 export default {
   data() {
     return {
+      title: "",
+      content: "",
+      startdate: "",
+      enddate: "",
+      theme: "",
       sido: [],
       map: null,
       searchKeyword: "",
       selectedSido: "0",
       searchResult: [],
       items: [],
-      // plan: [],
       markers: [],
     };
   },
@@ -83,6 +139,10 @@ export default {
   },
   methods: {
     ...mapActions(["createPlan"]),
+    registPlan() {
+      this.$router.push({ name: "MyPlan" });
+      // 여행계획 추가..
+    },
     loadScript() {
       const script = document.createElement("script");
       script.src =
@@ -131,6 +191,8 @@ export default {
         address: this.searchResult[index].address,
         lat: this.searchResult[index].lat,
         lon: this.searchResult[index].lon,
+        contentId: this.searchResult[index].content_id,
+        overview: this.searchResult[index].overview,
       };
       this.createPlan(planItem);
       this.displayMarker();
@@ -167,9 +229,6 @@ export default {
       );
       this.map.setBounds(bounds);
     },
-    // delete(name) {
-    //   console.log("delete: ", name);
-    // },
   },
   created() {
     http.get("/sido").then(({ status, data }) => {
@@ -217,5 +276,8 @@ img {
 }
 tr {
   border: 1px solid rgb(109, 109, 109);
+}
+.text1 {
+  font-size: 22px;
 }
 </style>

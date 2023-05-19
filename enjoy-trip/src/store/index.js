@@ -18,6 +18,7 @@ export default new Vuex.Store({
   mutations: {
     // 여행계획
     CREATE_PLAN_ITEM(state, planItem) {
+      console.log(planItem);
       state.plan.push(planItem);
       console.log(state.plan);
     },
@@ -48,7 +49,7 @@ export default new Vuex.Store({
   actions: {
     // 여행계획
     createPlan(context, planItem) {
-      // console.log(planItem);
+      console.log(planItem);
       context.commit("CREATE_PLAN_ITEM", planItem);
     },
     deletePlan(context, planItem) {
