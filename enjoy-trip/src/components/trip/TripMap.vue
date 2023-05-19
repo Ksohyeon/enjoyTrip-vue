@@ -64,6 +64,12 @@
         <img :src="row.item.사진" alt="이미지" width="100" height="100" />
       </template>
     </b-table>
+    <TripDetail
+      :selectedItem="selectedItem"
+      v-if="showModal"
+      :showModal="showModal"
+      @closeModal="closeModal"
+    />
   </div>
 </template>
 
@@ -76,15 +82,18 @@
 
 <script>
 import http from "@/util/http-common";
+import TripDetail from "@/components/trip/TripDetail.vue";
 export default {
   name: "TripMap",
   data() {
     return {
-      sido: [],
+      showModal: false,
       map: null,
+      selectedItem: null,
       selectedSido: "0",
       selectedCategory: "0",
       searchKeyword: "",
+      sido: [],
       searchResult: [],
       markers: [],
       markerPositions: [],
@@ -114,7 +123,6 @@ export default {
         text: sidoItem.name,
       }));
     },
-
     categoryOptions() {
       return [
         { value: "0", text: "관광지 유형" },
@@ -131,12 +139,15 @@ export default {
   },
   unmounted() {},
   methods: {
+    closeModal() {
+      this.showModal = false;
+      console.log("잘됨");
+      console.log(this.showModal);
+    },
     handleRowClick(item) {
-      console.log(item); // item에 해당하는 관광지 정보 출력 또는 원하는 동작 수행
-      this.$router.push({
-        name: "TripDetail",
-        params: { item },
-      });
+      this.showModal = true;
+      console.log(item.관광지명);
+      this.selectedItem = item;
     },
     loadScript() {
       const script = document.createElement("script");
@@ -157,7 +168,6 @@ export default {
       };
       this.map = new window.kakao.maps.Map(container, options);
     },
-
     search() {
       // 검색 버튼 클릭 시 동작할 로직
       // this.searchKeyword을 사용하여 검색어 처리
@@ -166,7 +176,6 @@ export default {
         category: this.selectedCategory,
         keyword: this.searchKeyword,
       };
-
       http.get(`/search`, { params }).then(({ status, data }) => {
         if (status == 200) {
           // console.log(data);
@@ -216,5 +225,6 @@ export default {
       this.map.setBounds(bounds);
     },
   },
+  components: { TripDetail },
 };
 </script>
