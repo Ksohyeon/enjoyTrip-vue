@@ -1,15 +1,19 @@
 <template>
   <div>
-    <div>여행 일정</div>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: "MemberView",
+  name: "TripView",
   components: {},
+  data() {
+    return {};
+  },
+  created() {},
+  methods: {},
 };
 </script>
 
-<style></style>
+<style scoped></style>

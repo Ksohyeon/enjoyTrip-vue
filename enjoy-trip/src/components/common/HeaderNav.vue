@@ -18,7 +18,7 @@
         <b-navbar-nav>
           <b-nav-item href="#">
             <b-icon icon="map" font-scale="1" variant="dark"></b-icon>
-            <router-link :to="{ name: '' }" class="link"
+            <router-link :to="{ name: 'map' }" class="link"
               >&#9;여행지 검색</router-link
             ></b-nav-item
           >
@@ -28,7 +28,7 @@
               font-scale="1"
               variant="dark"
             ></b-icon
-            ><router-link :to="{ name: '' }" class="link"
+            ><router-link :to="{ name: 'plan' }" class="link"
               >&#9;일정 만들기</router-link
             ></b-nav-item
           >
@@ -42,6 +42,16 @@
             ><b-icon icon="chat" font-scale="1" variant="dark"></b-icon
             ><router-link :to="{ name: '' }" class="link"
               >&#9;지역별 채팅방</router-link
+            ></b-nav-item
+          >
+          <b-nav-item href="#"
+            ><b-icon
+              icon="patch-question"
+              font-scale="1"
+              variant="dark"
+            ></b-icon
+            ><router-link :to="{ name: 'qna' }" class="link"
+              >&#9;QnA</router-link
             ></b-nav-item
           >
         </b-navbar-nav>
