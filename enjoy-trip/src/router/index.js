@@ -86,6 +86,39 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/place",
+    name: "place",
+    component: () => import("@/views/PlaceView"),
+    redirect: "/place/list",
+    children: [
+      {
+        path: "list",
+        name: "PlaceList",
+        component: () => import("@/components/place/PlaceList"),
+      },
+      {
+        path: "write",
+        name: "PlaceCreate",
+        component: () => import("@/components/place/PlaceCreate"),
+      },
+      {
+        path: "detail/:placeno",
+        name: "PlaceDetail",
+        component: () => import("@/components/place/PlaceDetail"),
+      },
+      {
+        path: "modify/:placeno",
+        name: "PlaceModify",
+        component: () => import("@/components/place/PlaceModify"),
+      },
+      {
+        path: "delete/:placeno",
+        name: "PlaceDelete",
+        component: () => import("@/components/place/PlaceDelete"),
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({
