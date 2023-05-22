@@ -28,7 +28,7 @@
               font-scale="1"
               variant="dark"
             ></b-icon
-            ><router-link :to="{ name: '' }" class="link"
+            ><router-link :to="{ name: 'plan' }" class="link"
               >&#9;일정 만들기</router-link
             ></b-nav-item
           >
