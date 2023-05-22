@@ -21,23 +21,26 @@
         lg="3"
         class="mb-2"
       >
-        <b-card
-          :img-src="place.image"
-          img-alt="Image"
-          img-top
-          class="mb-2"
-          tag="article"
-          style="max-width: 20rem"
-          @click="handleCardClick(place)"
-        >
-          <!-- 카드 내용 구성 -->
-          <b-card-title class="text-center">{{ place.title }}</b-card-title>
-          <b-card-text class="text-center">조회수: {{ place.hit }}</b-card-text>
-          <b-card-text class="text-center"
-            >다녀온 날짜: {{ place.date }}</b-card-text
+        <b-card-group>
+          <b-card
+            :img-src="place.image"
+            img-alt="Image"
+            img-top
+            class="mb-2 img-fluid"
+            tag="article"
+            style="max-width: 20rem"
+            @click="handleCardClick(place)"
           >
-          <b-card-text class="text-center">자세히 보기</b-card-text>
-        </b-card>
+            <b-card-title class="text-center">{{ place.title }}</b-card-title>
+            <b-card-text class="text-center"
+              >조회수: {{ place.hit }}</b-card-text
+            >
+            <b-card-text class="text-center"
+              >다녀온 날짜: {{ place.date }}</b-card-text
+            >
+            <b-card-text class="text-center">자세히 보기</b-card-text>
+          </b-card>
+        </b-card-group>
       </b-col>
     </b-row>
     <div v-if="places.length === 0" class="text-center">게시글이 없습니다.</div>
