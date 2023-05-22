@@ -1,13 +1,16 @@
 <template>
   <b-row>
-    <b-col>
+    <b-col cols="6">
+      <div>왼쪽 칸</div>
+    </b-col>
+    <b-col cols="6">
       <b-card border-variant="dark" no-body>
         <b-card-header class="text-center">
-          <h5>({{ place.placeno }})</h5>
-          <h3>{{ place.subject }}</h3>
+          <h3>{{ place.title }}</h3>
         </b-card-header>
         <b-card-body class="text-left">
-          <div :inner-html.prop="place.content | enterToBr"></div>
+          <img :src="place.image" alt="Image" class="img-fluid" />
+          <div>{{ place.content }}</div>
         </b-card-body>
       </b-card>
     </b-col>

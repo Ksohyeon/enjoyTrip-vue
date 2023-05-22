@@ -11,17 +11,36 @@
       </b-col>
     </b-row>
 
-    <b-table
-      v-if="places.length"
-      class="text-center"
-      striped
-      hover
-      head-variant="dark"
-      :items="places"
-      :fields="fields"
-      @row-clicked="rowClickListener"
-    ></b-table>
-    <div v-else class="text-center">게시글이 없습니다.</div>
+    <b-row>
+      <b-col
+        v-for="place in places"
+        :key="place.no"
+        cols="12"
+        sm="6"
+        md="4"
+        lg="3"
+        class="mb-2"
+      >
+        <b-card
+          :img-src="place.image"
+          img-alt="Image"
+          img-top
+          class="mb-2"
+          tag="article"
+          style="max-width: 20rem"
+          @click="handleCardClick(place)"
+        >
+          <!-- 카드 내용 구성 -->
+          <b-card-title class="text-center">{{ place.title }}</b-card-title>
+          <b-card-text class="text-center">조회수: {{ place.hit }}</b-card-text>
+          <b-card-text class="text-center"
+            >다녀온 날짜: {{ place.date }}</b-card-text
+          >
+          <b-card-text class="text-center">자세히 보기</b-card-text>
+        </b-card>
+      </b-col>
+    </b-row>
+    <div v-if="places.length === 0" class="text-center">게시글이 없습니다.</div>
   </b-container>
 </template>
 
@@ -32,35 +51,18 @@ export default {
   data: function () {
     return {
       places: [],
-      fields: [
-        {
-          key: "placeno",
-          label: "no",
-          sortable: true,
-        },
-        {
-          key: "subject",
-          label: "제목",
-          sortable: true,
-        },
-        {
-          key: "content",
-          label: "내용",
-          sortable: true,
-        },
-      ],
     };
   },
   methods: {
     movePage() {
       this.$router.push({ name: "PlaceCreate" });
     },
-    rowClickListener(row, index) {
-      console.log(index, row);
+    handleCardClick(place) {
+      console.log(place);
 
       this.$router.push({
         name: "PlaceDetail",
-        params: { placeno: row.placeno },
+        params: { no: place.no },
       });
     },
   },

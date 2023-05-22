@@ -52,8 +52,8 @@ export default {
     },
   },
   created() {
-    const placeno = this.$route.params.placeno;
-    http.get(`/place/${placeno}`).then(({ status, data }) => {
+    const no = this.$route.params.no;
+    http.get(`/place/${no}`).then(({ status, data }) => {
       if (status == 200) {
         this.place = data;
       }
