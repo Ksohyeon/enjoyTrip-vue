@@ -154,6 +154,7 @@ export default {
         this.places.push(this.plan[i].contentId);
       }
       console.log(this.places);
+      const thiz = this;
       const planToRegist = {
         title: this.title,
         content: this.content,
@@ -165,7 +166,7 @@ export default {
         callback: function (status) {
           if (status == 200) {
             alert("여행계획 등록 성공");
-            this.$router.push({ name: "plan" });
+            thiz.$router.push({ name: "plan" });
           }
         },
       };

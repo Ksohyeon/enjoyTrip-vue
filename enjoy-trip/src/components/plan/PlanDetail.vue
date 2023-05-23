@@ -1,11 +1,6 @@
 <template>
   <b-container>
     <b-row>
-      <b-col class="text-center">
-        <h3>여행계획 상세</h3>
-      </b-col>
-    </b-row>
-    <b-row>
       <b-col>
         <b-card border-variant="dark" no-body>
           <b-card-header class="text-center">
