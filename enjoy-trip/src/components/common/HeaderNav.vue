@@ -107,10 +107,10 @@ export default {
     message() {
       let userid = sessionStorage.getItem("userid");
       console.log(userid);
-      if (userid == null) {
-        return null;
-      } else {
+      if (userid != null) {
         return "안녕하세요 " + userid + " 님";
+      } else {
+        return "";
       }
     },
   },

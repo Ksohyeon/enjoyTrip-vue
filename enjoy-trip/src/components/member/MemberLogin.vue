@@ -82,10 +82,14 @@ export default {
       this.loginMember({
         userId: this.userid,
         userPwd: this.userpwd,
-        callback: function (status) {
+        callback: function (status, loginId) {
           console.log(status);
           if (status == 200) {
-            thiz.$router.push({ name: "main" });
+            if (loginId != null) {
+              thiz.$router.push({ name: "main" });
+            } else {
+              alert("아이디 또는 비밀번호가\n 잘못 입력 되었습니다.");
+            }
             window.location.reload();
           }
         },

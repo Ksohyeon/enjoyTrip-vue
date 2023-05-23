@@ -47,7 +47,15 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    // 여행계획
+    // 여행계획 등록
+    registPlan(content, planToRegist) {
+      console.log(planToRegist);
+      http.post(`/plan`, planToRegist).then(({ data, status }) => {
+        console.log("응답: ", data, status);
+        planToRegist.callback(status);
+      });
+    },
+    // 여행계획 만들기
     createPlan(context, planItem) {
       console.log(planItem);
       context.commit("CREATE_PLAN_ITEM", planItem);
@@ -67,7 +75,7 @@ export default new Vuex.Store({
             loginuser: data,
           });
           this.state.userId = data.userId;
-          payload.callback(status);
+          payload.callback(status, data.userId);
         })
         .catch((response) => {
           payload.callback(response.status);
