@@ -41,7 +41,7 @@ export default {
     moveModifyPlace() {
       this.$router.push({
         name: "PlaceModify",
-        params: this.place.placeno,
+        params: this.place.no,
       });
     },
     deletePlace() {

@@ -103,17 +103,17 @@ const routes = [
         component: () => import("@/components/place/PlaceCreate"),
       },
       {
-        path: "detail/:placeno",
+        path: "detail/:no",
         name: "PlaceDetail",
         component: () => import("@/components/place/PlaceDetail"),
       },
       {
-        path: "modify/:placeno",
+        path: "modify/:no",
         name: "PlaceModify",
         component: () => import("@/components/place/PlaceModify"),
       },
       {
-        path: "delete/:placeno",
+        path: "delete/:no",
         name: "PlaceDelete",
         component: () => import("@/components/place/PlaceDelete"),
       },

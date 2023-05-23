@@ -23,7 +23,7 @@
       >
         <b-card-group>
           <b-card
-            :img-src="place.image"
+            :img-src="require(`@/assets/uploads/${place.image}`)"
             img-alt="Image"
             img-top
             class="mb-2 img-fluid"
@@ -74,11 +74,6 @@ export default {
       if (status == 200) {
         this.places = data;
         console.log(data);
-
-        let i = 0;
-        for (let place of this.places) {
-          place.no = ++i;
-        }
       }
     });
     console.log(this.places);

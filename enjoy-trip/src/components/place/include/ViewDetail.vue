@@ -9,7 +9,11 @@
           <h3>{{ place.title }}</h3>
         </b-card-header>
         <b-card-body class="text-left">
-          <img :src="place.image" alt="Image" class="img-fluid" />
+          <img
+            :src="require(`@/assets/uploads/${place.image}`)"
+            alt="Image"
+            class="img-fluid"
+          />
           <div>{{ place.content }}</div>
         </b-card-body>
       </b-card>

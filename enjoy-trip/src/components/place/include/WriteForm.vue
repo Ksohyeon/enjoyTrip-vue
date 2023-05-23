@@ -35,6 +35,7 @@
           >
             <b-form-textarea
               id="content"
+              ref="content"
               v-model="content"
               placeholder="내용 입력..."
               rows="10"
@@ -44,18 +45,20 @@
 
           <b-form-datepicker
             id="example-datepicker"
+            ref="date"
             v-model="date"
             class="mb-2"
           ></b-form-datepicker>
 
           <b-form-file
-            v-model="image"
-            :state="Boolean(image)"
-            placeholder="Choose a file or drop it here..."
+            ref="file"
+            v-model="file"
+            :state="Boolean(file)"
+            placeholder="Choose a image or drop it here..."
             drop-placeholder="Drop file here..."
           ></b-form-file>
           <div class="mt-3">
-            Selected file: {{ image ? image.name : "not selected" }}
+            Selected file: {{ file ? file.name : "not selected" }}
           </div>
         </b-form>
       </b-col>
@@ -97,15 +100,16 @@ export default {
   data: function () {
     return {
       no: null,
-      userId: sessionStorage.getItem("userid"),
-      title: "",
-      content: "",
-      map: null,
-      marker: null,
       lat: 37.500613,
       lon: 127.036431,
+      title: "",
+      content: "",
+      userId: sessionStorage.getItem("userid"),
+      map: null,
+      marker: null,
       date: null,
-      image: null,
+      file: null,
+      encodedImage: null,
     };
   },
   computed: {
@@ -170,10 +174,10 @@ export default {
         ? ((isValid = false),
           (errMsg = "날짜를 선택해주세요"),
           this.$refs.date.focus())
-        : !this.image
+        : !this.file
         ? ((isValid = false),
           (errMsg = "이미지를 선택해주세요"),
-          this.$refs.image.focus())
+          this.$refs.file.focus())
         : (isValid = true);
 
       if (!isValid) {
@@ -187,29 +191,37 @@ export default {
       }
     },
     registPlace() {
-      http
-        .post("/place", {
-          userId: this.userId,
-          no: null,
-          title: this.title,
-          content: this.content,
-        })
-        .then(({ status }) => {
-          if (status == 200) {
-            alert("등록이 완료되었습니다.");
-          }
+      let formData = new FormData();
+      formData.append("file", this.file);
+      formData.append("no", this.no);
+      formData.append("lat", this.lat);
+      formData.append("lon", this.lon);
+      formData.append("title", this.title);
+      formData.append("content", this.content);
+      formData.append("date", this.date);
+      formData.append("userId", this.userId);
+      http.post("/place", formData).then(({ status }) => {
+        if (status == 200) {
+          alert("등록이 완료되었습니다.");
+        }
 
-          // 목록 페이지로 이동하기
-          this.$router.push({ name: "PlaceList" });
-        });
+        // 목록 페이지로 이동하기
+        this.$router.push({ name: "PlaceList" });
+      });
     },
     modifyPlace: function () {
       // 1. axios 이용해서 서버와 통신 후 수정처리
       http
         .put(`/place/${this.no}`, {
           no: this.no,
+          lat: this.lat,
+          lon: this.lon,
           title: this.title,
           content: this.content,
+          date: this.date,
+          created_at: this.created_at,
+          file: this.file,
+          userId: this.userId,
         })
         .then(({ status }) => {
           if (status == 200) {
