@@ -17,6 +17,10 @@
             <b-td>{{ getUserInfo.userId }}</b-td>
           </b-tr>
           <b-tr>
+            <b-td>닉네임</b-td>
+            <b-td>{{ getUserInfo.nickName }}</b-td>
+          </b-tr>
+          <b-tr>
             <b-td>비밀번호</b-td>
             <b-td>{{ getUserInfo.userPwd }}</b-td>
           </b-tr>
