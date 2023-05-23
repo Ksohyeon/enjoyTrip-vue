@@ -103,14 +103,14 @@ const routes = [
         component: () => import("@/components/plan/PlanCreate"),
       },
       {
-        path: "board",
-        name: "PlanBoard",
-        component: () => import("@/components/plan/PlanBoard"),
-      },
-      {
         path: "detail/:no",
         name: "PlanDetail",
         component: () => import("@/components/plan/PlanDetail"),
+      },
+      {
+        path: "modify/:no",
+        name: "PlanModify",
+        component: () => import("@/components/plan/PlanModify"),
       },
     ],
   },

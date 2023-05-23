@@ -24,6 +24,19 @@
             ></b-form-input>
           </b-form-group>
           <b-form-group
+            label="닉네임"
+            label-for="nickname"
+            description="닉네임을 입력하세요."
+          >
+            <b-form-input
+              id="nickname"
+              v-model="nickname"
+              type="text"
+              required
+              ref="nickname"
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
             label="아이디"
             label-for="userid"
             description="아이디를 입력하세요."
@@ -103,6 +116,7 @@ export default {
   data() {
     return {
       username: null,
+      nickname: null,
       userid: null,
       userpwd: null,
       pwdcheck: null,
@@ -119,6 +133,11 @@ export default {
         ((msg = "이름을 입력해주세요"),
         (err = false),
         this.$refs.username.focus());
+      err &&
+        !this.nickname &&
+        ((msg = "이름을 입력해주세요"),
+        (err = false),
+        this.$refs.nickname.focus());
       err &&
         !this.userid &&
         ((msg = "아이디를 입력해주세요"),
@@ -154,6 +173,7 @@ export default {
       const thiz = this;
       this.joinMember({
         userName: this.username,
+        nickName: this.nickname,
         userId: this.userid,
         userPwd: this.userpwd,
         emailId: this.emailid,

@@ -82,6 +82,11 @@ export default {
           label: "여행종료일",
           sortable: true,
         },
+        {
+          key: "hit",
+          label: "조회수",
+          sortable: true,
+        },
       ],
     };
   },

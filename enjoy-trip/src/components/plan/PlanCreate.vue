@@ -126,10 +126,10 @@ export default {
       enddate: "",
       theme: "",
       themes: [
-        { value: "1", text: "나홀로여행" },
-        { value: "2", text: "가족여행" },
-        { value: "3", text: "친구와여행" },
-        { value: "4", text: "커플여행" },
+        { value: "나홀로 여행", text: "나홀로 여행" },
+        { value: "가족 여행", text: "가족 여행" },
+        { value: "친구와 여행", text: "친구와 여행" },
+        { value: "커플 여행", text: "커플 여행" },
       ],
       sido: [],
       map: null,
@@ -261,6 +261,7 @@ export default {
     },
   },
   created() {
+    this.$store.state.plan = [];
     http.get("/sido").then(({ status, data }) => {
       if (status == 200) {
         this.sido = data;

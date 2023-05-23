@@ -28,7 +28,7 @@
               font-scale="1"
               variant="dark"
             ></b-icon
-            ><router-link :to="{ name: '' }" class="link"
+            ><router-link :to="{ name: 'plan' }" class="link"
               >&#9;일정 만들기</router-link
             ></b-nav-item
           >
@@ -108,10 +108,10 @@ export default {
     message() {
       let userid = sessionStorage.getItem("userid");
       console.log(userid);
-      if (userid == null) {
-        return null;
-      } else {
+      if (userid !== null) {
         return "안녕하세요 " + userid + " 님";
+      } else {
+        return "";
       }
     },
   },
@@ -142,11 +142,12 @@ export default {
           console.log(status);
           if (status == 200) {
             thiz.$router.push({ name: "main" });
-            window.location.reload();
+            setTimeout(() => {
+              window.location.reload();
+            }, 300);
           }
         },
       });
-      window.location.reload();
     },
   },
   created() {

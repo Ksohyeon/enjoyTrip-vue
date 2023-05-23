@@ -4,7 +4,7 @@
       <b-table-simple>
         <b-thead>
           <b-tr>
-            <b-tc> <b-td>사용자정보</b-td></b-tc>
+            <b-td>사용자정보</b-td>
           </b-tr>
         </b-thead>
         <b-tbody>
@@ -15,6 +15,10 @@
           <b-tr>
             <b-td>아이디</b-td>
             <b-td>{{ getUserInfo.userId }}</b-td>
+          </b-tr>
+          <b-tr>
+            <b-td>닉네임</b-td>
+            <b-td>{{ getUserInfo.nickName }}</b-td>
           </b-tr>
           <b-tr>
             <b-td>비밀번호</b-td>
