@@ -8,6 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     userInfo: null,
+    plan: [],
   },
   getters: {
     getUserInfo: function (state) {
@@ -15,6 +16,17 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    // 여행계획
+    CREATE_PLAN_ITEM(state, planItem) {
+      console.log(planItem);
+      state.plan.push(planItem);
+      console.log(state.plan);
+    },
+    DELETE_PLAN_ITEM(state, planItem) {
+      const idx = state.plan.indexOf(planItem);
+      state.plan.splice(idx, 1);
+    },
+    // 회원관리
     LOGIN(state, payload) {
       console.log("스테이트", state);
       console.log("페이로드", payload);
@@ -35,6 +47,23 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    // 여행계획 등록
+    registPlan(content, planToRegist) {
+      console.log(planToRegist);
+      http.post(`/plan`, planToRegist).then(({ data, status }) => {
+        console.log("응답: ", data, status);
+        planToRegist.callback(status);
+      });
+    },
+    // 여행계획 만들기
+    createPlan(context, planItem) {
+      console.log(planItem);
+      context.commit("CREATE_PLAN_ITEM", planItem);
+    },
+    deletePlan(context, planItem) {
+      context.commit("DELETE_PLAN_ITEM", planItem);
+    },
+    // 회원관리
     loginMember(context, payload) {
       console.log("payload: ", payload);
       http
@@ -46,7 +75,7 @@ export default new Vuex.Store({
             loginuser: data,
           });
           this.state.userId = data.userId;
-          payload.callback(status);
+          payload.callback(status, data.userId);
         })
         .catch((response) => {
           payload.callback(response.status);

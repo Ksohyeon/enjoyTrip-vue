@@ -46,6 +46,11 @@ const routes = [
         name: "map",
         component: () => import("@/components/trip/TripMap"),
       },
+      {
+        path: "detail",
+        name: "TripDetail",
+        component: () => import("@/components/trip/TripDetail"),
+      },
     ],
   },
   {
@@ -65,19 +70,47 @@ const routes = [
         component: () => import("@/components/qna/QnaCreate"),
       },
       {
-        path: "detail/:qnano",
+        path: "detail/:no",
         name: "QnaDetail",
         component: () => import("@/components/qna/QnaDetail"),
       },
       {
-        path: "modify/:qnano",
+        path: "modify/:no",
         name: "QnaModify",
         component: () => import("@/components/qna/QnaModify"),
       },
       {
-        path: "delete/:qnano",
+        path: "delete/:no",
         name: "QnaDelete",
         component: () => import("@/components/qna/QnaDelete"),
+      },
+    ],
+  },
+  {
+    path: "/plan",
+    name: "plan",
+    component: () => import("@/views/PlanView"),
+    redirect: "/plan/main",
+    children: [
+      {
+        path: "main",
+        name: "PlanMain",
+        component: () => import("@/components/plan/PlanMain"),
+      },
+      {
+        path: "create",
+        name: "PlanCreate",
+        component: () => import("@/components/plan/PlanCreate"),
+      },
+      {
+        path: "board",
+        name: "PlanBoard",
+        component: () => import("@/components/plan/PlanBoard"),
+      },
+      {
+        path: "detail/:no",
+        name: "PlanDetail",
+        component: () => import("@/components/plan/PlanDetail"),
       },
     ],
   },
