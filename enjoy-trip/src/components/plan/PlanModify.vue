@@ -43,7 +43,7 @@
       </b-col>
       <b-col cols="6" class="mt-2">
         <!-- kakao map start -->
-        <h3>내 여행계획 만들기</h3>
+        <h3>여행계획 수정</h3>
         <div id="map" class="mt-3"></div>
         <!-- kakao map end -->
       </b-col>
@@ -61,7 +61,7 @@
             <!-- 시작날짜 -->
             <b-form-input
               id="startdate-input"
-              v-model="startdate"
+              v-model="startDate"
               size="sm"
               type="text"
               placeholder="YYYY-MM-DD"
@@ -70,7 +70,7 @@
             ></b-form-input>
             <b-input-group-append>
               <b-form-datepicker
-                v-model="startdate"
+                v-model="startDate"
                 size="sm"
                 button-only
                 right
@@ -82,7 +82,7 @@
             <!-- 종료날짜 -->
             <b-form-input
               id="enddate-input"
-              v-model="enddate"
+              v-model="endDate"
               size="sm"
               type="text"
               placeholder="YYYY-MM-DD"
@@ -91,7 +91,7 @@
             ></b-form-input>
             <b-input-group-append>
               <b-form-datepicker
-                v-model="enddate"
+                v-model="endDate"
                 size="sm"
                 button-only
                 right
@@ -103,7 +103,7 @@
           <b-input-group prepend="내용" size="sm">
             <b-textarea v-model="content"></b-textarea>
           </b-input-group>
-          <b-button class="mt-3" @click="regist">계획 추가</b-button>
+          <b-button class="mt-3" @click="modify">계획 수정</b-button>
           <!-- 계획 추가 테이블 -->
           <plan-list @mapreload="displayMarker"></plan-list>
         </div>
@@ -118,13 +118,15 @@ import http from "@/util/http-common";
 import PlanList from "@/components/plan/PlanList.vue";
 
 export default {
-  data() {
+  data: function () {
     return {
-      title: "",
-      content: "",
-      startdate: "",
-      enddate: "",
-      theme: "",
+      planno: null,
+      title: null,
+      content: null,
+      startDate: null,
+      endDate: null,
+      theme: null,
+      userId: sessionStorage.getItem("userid"),
       themes: [
         { value: "나홀로 여행", text: "나홀로 여행" },
         { value: "가족 여행", text: "가족 여행" },
@@ -145,33 +147,38 @@ export default {
     PlanList,
   },
   methods: {
-    ...mapActions(["createPlan", "registPlan"]),
-    regist() {
-      // 여행계획 추가..
-      this.places = [];
+    ...mapActions(["createPlan"]),
+    modify() {
+      const attrIds = [];
       for (let i = 0; i < this.plan.length; i++) {
-        console.log(this.plan[i].contentId);
-        this.places.push(this.plan[i].contentId);
+        console.log(this.plan[i].attrNo);
+        if (this.plan[i].attrNo !== undefined) {
+          attrIds.push(this.plan[i].attrNo);
+          console.log(1);
+        } else {
+          attrIds.push(this.plan[i].contentId);
+          console.log(2);
+        }
       }
-      console.log(this.places);
-      const thiz = this;
-      const planToRegist = {
+      const modified = {
         title: this.title,
         content: this.content,
-        startDate: this.startdate,
-        endDate: this.enddate,
+        startDate: this.startDate,
+        endDate: this.endDate,
         theme: this.theme,
-        userId: sessionStorage.getItem("userid"),
-        places: this.places,
-        callback: function (status) {
-          if (status == 200) {
-            alert("여행계획 등록 성공");
-            thiz.$router.push({ name: "plan" });
-          }
-        },
+        userId: this.userId,
+        places: attrIds,
       };
-      console.log(planToRegist);
-      this.registPlan(planToRegist);
+      console.log("modified: ", modified);
+      http.put(`/plan/${this.planno}`, modified).then(({ status }) => {
+        if (status == 200) {
+          console.log(status);
+          this.$router.push({
+            name: "PlanDetail",
+            params: { no: this.planno },
+          });
+        }
+      });
     },
     loadScript() {
       const script = document.createElement("script");
@@ -261,7 +268,21 @@ export default {
     },
   },
   created() {
-    this.$store.state.plan = [];
+    this.planno = this.$route.params.no;
+    http.get(`/plan/${this.planno}`).then(({ status, data }) => {
+      if (status == 200) {
+        console.log(data);
+        this.title = data.title;
+        this.content = data.content;
+        this.startDate = data.startDate;
+        this.endDate = data.endDate;
+        this.theme = data.theme;
+        this.places = data.places;
+        console.log("1: ", data.places);
+        this.$store.state.plan = this.places;
+        this.displayMarker();
+      }
+    });
     http.get("/sido").then(({ status, data }) => {
       if (status == 200) {
         this.sido = data;

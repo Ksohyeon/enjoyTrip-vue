@@ -10,21 +10,20 @@
         <b-form>
           <b-form-group
             label-cols="12"
-            id="title-group"
+            id="subject-group"
             label="제목:"
-            label-for="title"
+            label-for="subject"
             description="제목을 입력하세요."
           >
             <b-form-input
-              id="title"
-              ref="title"
-              v-model="title"
+              id="subject"
+              ref="subject"
+              v-model="subject"
               type="text"
               required
               placeholder="제목 입력..."
             />
           </b-form-group>
-          <b-form-select v-model="category" :options="options"></b-form-select>
           <b-form-group
             label-cols="12"
             id="content-group"
@@ -70,14 +69,8 @@ export default {
   data: function () {
     return {
       userId: sessionStorage.getItem("userid"),
-      title: "",
-      category: "",
+      subject: "",
       content: "",
-      options: [
-        { value: null, text: "카테고리를 선택하세요" },
-        { value: "1", text: "1" },
-        { value: "2", text: "2" },
-      ],
     };
   },
   computed: {
@@ -90,10 +83,10 @@ export default {
       let isValid = true; // 유효하면 true
       let errMsg = "";
 
-      !this.title
+      !this.subject
         ? ((isValid = false),
           (errMsg = "제목을 입력해주세요."),
-          this.$refs.title.focus())
+          this.$refs.isbn.focus())
         : !this.content
         ? ((isValid = false),
           (errMsg = "content을 입력해주세요."),
@@ -112,26 +105,27 @@ export default {
     },
     registQna() {
       http
-        .post("/qna", {
+        .post("/qnaapi/qna", {
           userId: this.userId,
-          title: this.title,
-          category: this.category,
+          qnano: null,
+          subject: this.subject,
           content: this.content,
         })
         .then(({ status }) => {
           if (status == 200) {
             alert("등록이 완료되었습니다.");
-            this.$router.push({ name: "qna" });
           }
+
+          // 목록 페이지로 이동하기
+          this.$router.push({ name: "QnaList" });
         });
     },
     modifyQna: function () {
       // 1. axios 이용해서 서버와 통신 후 수정처리
       http
-        .put(`/qna/${this.no}`, {
-          no: this.no,
-          title: this.title,
-          category: this.category,
+        .put(`/qnaapi/qna/${this.qnano}`, {
+          qnano: this.qnano,
+          subject: this.subject,
           content: this.content,
         })
         .then(({ status }) => {
@@ -148,9 +142,9 @@ export default {
   },
   created: function () {
     if (this.type == "modify") {
-      http.get(`/qna/${this.$route.params.no}`).then(({ data }) => {
-        this.no = this.$route.params.no;
-        this.title = data.title;
+      http.get(`/qnaapi/qna/${this.$route.params.qnano}`).then(({ data }) => {
+        this.qnano = this.$route.params.qnano;
+        this.subject = data.subject;
         this.content = data.content;
       });
     }

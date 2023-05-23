@@ -103,7 +103,7 @@
           <b-input-group prepend="내용" size="sm">
             <b-textarea v-model="content"></b-textarea>
           </b-input-group>
-          <b-button class="mt-3" @click="regist">계획 추가</b-button>
+          <b-button class="mt-3" @click="registPlan">계획 추가</b-button>
           <!-- 계획 추가 테이블 -->
           <plan-list @mapreload="displayMarker"></plan-list>
         </div>
@@ -126,10 +126,10 @@ export default {
       enddate: "",
       theme: "",
       themes: [
-        { value: "나홀로 여행", text: "나홀로 여행" },
-        { value: "가족 여행", text: "가족 여행" },
-        { value: "친구와 여행", text: "친구와 여행" },
-        { value: "커플 여행", text: "커플 여행" },
+        { value: "1", text: "나홀로여행" },
+        { value: "2", text: "가족여행" },
+        { value: "3", text: "친구와여행" },
+        { value: "4", text: "커플여행" },
       ],
       sido: [],
       map: null,
@@ -138,40 +138,16 @@ export default {
       searchResult: [],
       items: [],
       markers: [],
-      places: [],
     };
   },
   components: {
     PlanList,
   },
   methods: {
-    ...mapActions(["createPlan", "registPlan"]),
-    regist() {
+    ...mapActions(["createPlan"]),
+    registPlan() {
+      this.$router.push({ name: "MyPlan" });
       // 여행계획 추가..
-      this.places = [];
-      for (let i = 0; i < this.plan.length; i++) {
-        console.log(this.plan[i].contentId);
-        this.places.push(this.plan[i].contentId);
-      }
-      console.log(this.places);
-      const thiz = this;
-      const planToRegist = {
-        title: this.title,
-        content: this.content,
-        startDate: this.startdate,
-        endDate: this.enddate,
-        theme: this.theme,
-        userId: sessionStorage.getItem("userid"),
-        places: this.places,
-        callback: function (status) {
-          if (status == 200) {
-            alert("여행계획 등록 성공");
-            thiz.$router.push({ name: "plan" });
-          }
-        },
-      };
-      console.log(planToRegist);
-      this.registPlan(planToRegist);
     },
     loadScript() {
       const script = document.createElement("script");
@@ -221,7 +197,7 @@ export default {
         address: this.searchResult[index].address,
         lat: this.searchResult[index].lat,
         lon: this.searchResult[index].lon,
-        contentId: this.searchResult[index].contentId,
+        contentId: this.searchResult[index].content_id,
         overview: this.searchResult[index].overview,
       };
       this.createPlan(planItem);
@@ -261,7 +237,6 @@ export default {
     },
   },
   created() {
-    this.$store.state.plan = [];
     http.get("/sido").then(({ status, data }) => {
       if (status == 200) {
         this.sido = data;

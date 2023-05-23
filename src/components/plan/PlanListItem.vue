@@ -3,9 +3,7 @@
     <b-row>
       <span class="imgarea"> <img :src="`${planItem.img}`" /> </span>
       <span class="bg-light text-left planinfo">
-        <span class="text-t" v-if="flag">{{ planItem.title }}</span>
-        <span class="text-t">{{ planItem.name }}</span>
-        <br />
+        <span class="text-t">{{ planItem.name }}</span> <br />
         <span>{{ planItem.address }}</span>
       </span>
       <span
@@ -21,11 +19,6 @@
 import { mapActions } from "vuex";
 export default {
   name: "PlanListItem",
-  data() {
-    return {
-      flag: false,
-    };
-  },
   props: {
     planItem: Object,
   },
@@ -35,12 +28,6 @@ export default {
       this.deletePlan(this.planItem);
       this.$emit("reloadmap");
     },
-  },
-  created() {
-    console.log("title: ", this.planItem.title);
-    if (this.planItem.title !== null) {
-      this.flag = true;
-    }
   },
 };
 </script>
