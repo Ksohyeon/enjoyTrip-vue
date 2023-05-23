@@ -7,12 +7,13 @@
             src="@/assets/img/enjoy-trip.png"
             class="d-inline-block align-middle"
             width="150px"
-            alt="Kitten"
-          />
+            alt="Kitten" />
         </router-link>
       </b-navbar-brand>
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-navbar-toggle
+        target="nav-collapse"
+        style="background-color: #b2ccff"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
@@ -48,8 +49,7 @@
             ><b-icon
               icon="patch-question"
               font-scale="1"
-              variant="dark"
-            ></b-icon
+              variant="dark"></b-icon
             ><router-link :to="{ name: 'qna' }" class="link"
               >&#9;QnA</router-link
             ></b-nav-item
@@ -160,5 +160,15 @@ export default {
 .navbar-dark {
   color: black !important;
   text-align: center;
+}
+
+.link {
+  color: black;
+  text-decoration: none;
+}
+.link:hover {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
 }
 </style>
