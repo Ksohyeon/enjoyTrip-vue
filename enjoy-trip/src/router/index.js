@@ -103,9 +103,14 @@ const routes = [
         component: () => import("@/components/plan/PlanCreate"),
       },
       {
-        path: "planBoard",
+        path: "board",
         name: "PlanBoard",
         component: () => import("@/components/plan/PlanBoard"),
+      },
+      {
+        path: "detail/:no",
+        name: "PlanDetail",
+        component: () => import("@/components/plan/PlanDetail"),
       },
     ],
   },

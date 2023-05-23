@@ -91,7 +91,13 @@ export default {
         name: "PlanCreate",
       });
     },
-    rowClickListener() {},
+    rowClickListener(row, index) {
+      console.log(row, index);
+      this.$router.push({
+        name: "PlanDetail",
+        params: { no: row.no },
+      });
+    },
   },
   created() {
     http.get("/plan").then(({ status, data }) => {

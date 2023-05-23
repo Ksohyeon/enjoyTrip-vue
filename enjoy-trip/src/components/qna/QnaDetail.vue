@@ -56,6 +56,7 @@ export default {
     http.get(`/qna/${qnano}`).then(({ status, data }) => {
       if (status == 200) {
         this.qna = data;
+        console.log(this.qna);
       }
     });
   },
