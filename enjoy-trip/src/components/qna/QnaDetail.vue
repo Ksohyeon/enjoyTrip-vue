@@ -41,7 +41,7 @@ export default {
     moveModifyQna() {
       this.$router.push({
         name: "QnaModify",
-        params: this.qna.qnano,
+        params: this.qna.no,
       });
     },
     deleteQna() {
@@ -52,8 +52,8 @@ export default {
     },
   },
   created() {
-    const qnano = this.$route.params.qnano;
-    http.get(`/qnaapi/qna/${qnano}`).then(({ status, data }) => {
+    const qnano = this.$route.params.no;
+    http.get(`/qna/${qnano}`).then(({ status, data }) => {
       if (status == 200) {
         this.qna = data;
       }

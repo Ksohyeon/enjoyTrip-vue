@@ -70,17 +70,17 @@ const routes = [
         component: () => import("@/components/qna/QnaCreate"),
       },
       {
-        path: "detail/:qnano",
+        path: "detail/:no",
         name: "QnaDetail",
         component: () => import("@/components/qna/QnaDetail"),
       },
       {
-        path: "modify/:qnano",
+        path: "modify/:no",
         name: "QnaModify",
         component: () => import("@/components/qna/QnaModify"),
       },
       {
-        path: "delete/:qnano",
+        path: "delete/:no",
         name: "QnaDelete",
         component: () => import("@/components/qna/QnaDelete"),
       },
@@ -103,9 +103,9 @@ const routes = [
         component: () => import("@/components/plan/PlanCreate"),
       },
       {
-        path: "myplan",
-        name: "MyPlan",
-        component: () => import("@/components/plan/MyPlan"),
+        path: "planBoard",
+        name: "PlanBoard",
+        component: () => import("@/components/plan/PlanBoard"),
       },
     ],
   },

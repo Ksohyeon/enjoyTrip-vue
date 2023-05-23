@@ -34,18 +34,28 @@ export default {
       qnas: [],
       fields: [
         {
-          key: "qnano",
+          key: "no",
           label: "no",
           sortable: true,
         },
         {
-          key: "subject",
+          key: "title",
           label: "제목",
+          sortable: true,
+        },
+        {
+          key: "category",
+          label: "카테고리",
           sortable: true,
         },
         {
           key: "content",
           label: "내용",
+          sortable: true,
+        },
+        {
+          key: "createdAt",
+          label: "작성일",
           sortable: true,
         },
       ],
@@ -60,12 +70,12 @@ export default {
 
       this.$router.push({
         name: "QnaDetail",
-        params: { qnano: row.qnano },
+        params: { no: row.no },
       });
     },
   },
   created() {
-    http.get("/qnaapi/qna").then(({ status, data }) => {
+    http.get("/qna").then(({ status, data }) => {
       if (status == 200) {
         this.qnas = data;
         console.log(data);
