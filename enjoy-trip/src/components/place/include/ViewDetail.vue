@@ -7,6 +7,18 @@
       <b-card border-variant="dark" no-body>
         <b-card-header class="text-center">
           <h3>{{ place.title }}</h3>
+          <b-button @click="like" v-if="!isliked">
+            <b-icon icon="heart" aria-hidden="true"></b-icon>
+            <div>{{ likeCnt }}</div>
+          </b-button>
+          <b-button @click="dislike" v-if="isliked">
+            <b-icon
+              icon="heart-fill"
+              variant="danger"
+              aria-hidden="true"
+            ></b-icon>
+            <div>{{ likeCnt }}</div>
+          </b-button>
         </b-card-header>
         <b-card-body class="text-left">
           <img
@@ -29,21 +41,60 @@
 </style>
 
 <script>
+import http from "@/util/http-common";
 export default {
   name: "ViewDetail",
   data() {
     return {
       map: null,
       marker: null,
+      isliked: false,
+      userId: null,
+      likeCnt: 0,
+      likeUsers: [],
     };
   },
   props: {
     place: Object,
   },
-  created() {
-    this.loadScript();
-  },
+  mounted() {
+  this.loadScript();
+  this.userId = sessionStorage.getItem("userid");
+  this.$watch(
+    () => this.place, // 감시할 대상
+    () => {
+      this.likeUsers = this.place.likeUsers;
+      this.likeCnt = this.likeUsers.length;
+
+      for (let i = 0; i < this.likeUsers.length; i++) {
+        if (this.likeUsers[i].userId == this.userId) {
+          this.isliked = true;
+          break;
+        }
+      }
+    }
+  );
+},
   methods: {
+    like() {
+      if(this.isliked) return;
+      this.isliked = !this.isliked;
+      this.likeCnt++;
+      http
+        .post(`/place/${this.place.no}/like/${this.userId}`)
+        .then((response) => {
+          console.log(response);
+        });
+    },
+    dislike() {
+      this.isliked = !this.isliked;
+      this.likeCnt--;
+      http
+        .delete(`/place/${this.place.no}/like/${this.userId}`)
+        .then((response) => {
+          console.log(response);
+        });
+    },
     loadScript() {
       const script = document.createElement("script");
       script.src =
