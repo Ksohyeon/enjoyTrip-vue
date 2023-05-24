@@ -8,7 +8,7 @@
         <b-col v-for="item in sido" :key="item.code" sm-cols="4" class="middle">
           <b-card
             :title="item.name"
-            @click="handleButtonClick(item.code)"
+            @click="handleButtonClick(item.code, item.name)"
             class="middle">
           </b-card>
         </b-col>
@@ -36,10 +36,10 @@ export default {
     });
   },
   methods: {
-    handleButtonClick(code) {
+    handleButtonClick(code, name) {
       this.$router.push({
         name: "ChatRoom",
-        params: { no: code },
+        params: { no: code, name: name },
       });
     },
   },

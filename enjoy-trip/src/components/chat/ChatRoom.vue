@@ -1,8 +1,13 @@
 <template>
   <div>
-    내용: <input v-model="message" type="text" @keyup="sendMessage" />
-    <div v-for="(item, idx) in recvList" :key="idx">
-      <h3>{{ item.userNickName }} : {{ item.message }}</h3>
+    <h2 class="text-center">{{ roomname }}의 채팅방</h2>
+    <div class="chat">
+      <div v-for="(item, idx) in recvList" :key="idx">
+        <h3 :class="{ mytext: item.userId === userId }">
+          {{ item.userNickName }} : {{ item.message }}
+        </h3>
+      </div>
+      내용: <input v-model="message" type="text" @keyup="sendMessage" />
     </div>
   </div>
 </template>
@@ -19,6 +24,7 @@ export default {
       userNickName: "익명의 유저",
       message: "",
       roomno: null,
+      roomname: null,
       recvList: [],
     };
   },
@@ -26,7 +32,9 @@ export default {
     // App.vue가 생성되면 소켓 연결을 시도합니다.
     this.connect();
     this.roomno = this.$route.params.no;
-    console.log("방번호 :" + this.roomno);
+    this.roomname = this.$route.params.name;
+    this.userId = sessionStorage.getItem("userid");
+    this.userNickName = sessionStorage.getItem("nickname");
     http.get(`/chat/${this.roomno}`).then(({ status, data }) => {
       if (status == 200) {
         this.recvList = data;
@@ -46,9 +54,6 @@ export default {
       console.log("세션 : " + sessionStorage.getItem("nickname"));
       if (sessionStorage.getItem("userid") != null) {
         if (this.stompClient && this.stompClient.connected) {
-          this.userId = sessionStorage.getItem("userid");
-          this.userNickName = sessionStorage.getItem("nickname");
-
           const msg = {
             userId: this.userId,
             userNickName: this.userNickName,
@@ -95,3 +100,20 @@ export default {
   },
 };
 </script>
+<style scoped>
+.middle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chat {
+  margin: 3rem 3rem 3rem 3rem;
+  padding: 1rem 1rem 1rem 1rem;
+  border: 3px solid grey;
+  box-shadow: 0px 0px 10px 0px #8e8e8e;
+  border-radius: 10px;
+}
+.mytext {
+  text-align: right;
+}
+</style>
