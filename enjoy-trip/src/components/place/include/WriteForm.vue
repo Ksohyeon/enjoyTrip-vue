@@ -211,25 +211,21 @@ export default {
     },
     modifyPlace: function () {
       // 1. axios 이용해서 서버와 통신 후 수정처리
-      http
-        .put(`/place/${this.no}`, {
-          no: this.no,
-          lat: this.lat,
-          lon: this.lon,
-          title: this.title,
-          content: this.content,
-          date: this.date,
-          created_at: this.created_at,
-          file: this.file,
-          userId: this.userId,
-        })
-        .then(({ status }) => {
-          if (status == 200) {
-            alert("수정이 완료되었습니다.");
-          }
-          // 2. 도서 목록 페이지로 이동
-          this.$router.push({ name: "PlaceList" });
-        });
+      let formData = new FormData();
+      formData.append("file", this.file);
+      formData.append("lat", this.lat);
+      formData.append("lon", this.lon);
+      formData.append("title", this.title);
+      formData.append("content", this.content);
+      formData.append("date", this.date);
+      formData.append("userId", this.userId);
+      http.put(`/place/${this.no}`, formData).then(({ status }) => {
+        if (status == 200) {
+          alert("수정이 완료되었습니다.");
+        }
+        // 2. 도서 목록 페이지로 이동
+        this.$router.push({ name: "PlaceList" });
+      });
     },
     moveList() {
       this.$router.push({ name: "PlaceList" });
