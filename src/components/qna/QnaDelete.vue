@@ -11,8 +11,8 @@ import http from "@/util/http-common";
 export default {
   created() {
     if (confirm("정말로 삭제?")) {
-      const no = this.$route.params.no;
-      http.delete(`/qna/${no}`).then(({ status }) => {
+      const qnano = this.$route.params.qnano;
+      http.delete(`/qnaapi/qna/${qnano}`).then(({ status }) => {
         if (status == 200) {
           alert("삭제가 완료되었습니다.");
         }

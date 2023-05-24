@@ -46,11 +46,6 @@ const routes = [
         name: "map",
         component: () => import("@/components/trip/TripMap"),
       },
-      {
-        path: "detail",
-        name: "TripDetail",
-        component: () => import("@/components/trip/TripDetail"),
-      },
     ],
   },
   {
@@ -70,52 +65,19 @@ const routes = [
         component: () => import("@/components/qna/QnaCreate"),
       },
       {
-        path: "detail/:no",
+        path: "detail/:qnano",
         name: "QnaDetail",
         component: () => import("@/components/qna/QnaDetail"),
       },
       {
-        path: "modify/:no",
+        path: "modify/:qnano",
         name: "QnaModify",
         component: () => import("@/components/qna/QnaModify"),
       },
       {
-        path: "delete/:no",
+        path: "delete/:qnano",
         name: "QnaDelete",
         component: () => import("@/components/qna/QnaDelete"),
-      },
-    ],
-  },
-  {
-    path: "/place",
-    name: "place",
-    component: () => import("@/views/PlaceView"),
-    redirect: "/place/list",
-    children: [
-      {
-        path: "list",
-        name: "PlaceList",
-        component: () => import("@/components/place/PlaceList"),
-      },
-      {
-        path: "write",
-        name: "PlaceCreate",
-        component: () => import("@/components/place/PlaceCreate"),
-      },
-      {
-        path: "detail/:no",
-        name: "PlaceDetail",
-        component: () => import("@/components/place/PlaceDetail"),
-      },
-      {
-        path: "modify/:no",
-        name: "PlaceModify",
-        component: () => import("@/components/place/PlaceModify"),
-      },
-      {
-        path: "delete/:no",
-        name: "PlaceDelete",
-        component: () => import("@/components/place/PlaceDelete"),
       },
     ],
   },
@@ -136,14 +98,9 @@ const routes = [
         component: () => import("@/components/plan/PlanCreate"),
       },
       {
-        path: "detail/:no",
-        name: "PlanDetail",
-        component: () => import("@/components/plan/PlanDetail"),
-      },
-      {
-        path: "modify/:no",
-        name: "PlanModify",
-        component: () => import("@/components/plan/PlanModify"),
+        path: "myplan",
+        name: "MyPlan",
+        component: () => import("@/components/plan/MyPlan"),
       },
     ],
   },

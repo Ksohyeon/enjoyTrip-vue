@@ -3,10 +3,8 @@
     <b-col>
       <b-card border-variant="dark" no-body>
         <b-card-header class="text-center">
-          <h5>({{ qna.no }})</h5>
-          <h3>{{ qna.title }}</h3>
-          <h6>{{ qna.author.nickName }}</h6>
-          <h6>{{ qna.createdAt }}</h6>
+          <h5>({{ qna.qnano }})</h5>
+          <h3>{{ qna.subject }}</h3>
         </b-card-header>
         <b-card-body class="text-left">
           <div :inner-html.prop="qna.content | enterToBr"></div>

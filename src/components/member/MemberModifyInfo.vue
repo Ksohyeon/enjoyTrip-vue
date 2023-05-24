@@ -20,17 +20,12 @@
             ></b-form-input>
           </b-form-group>
           <b-form-group label="아이디" label-for="userid">
-            <b-tr>
-              <b-td>{{ getUserInfo.userId }}</b-td>
-            </b-tr>
-          </b-form-group>
-          <b-form-group label="닉네임" label-for="nickname">
             <b-form-input
-              id="nickname"
-              v-model="getUserInfo.nickName"
+              id="userid"
+              v-model="getUserInfo.userId"
               type="text"
               required
-              ref="nickname"
+              ref="userid"
             ></b-form-input>
           </b-form-group>
           <b-form-group label="비밀번호" label-for="userpwd">
@@ -40,6 +35,15 @@
               type="text"
               required
               ref="userpwd"
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group label="비밀번호확인" label-for="pwdcheck">
+            <b-form-input
+              id="pwdcheck"
+              v-model="getUserInfo.userPwd"
+              type="text"
+              required
+              ref="pwdcheck"
             ></b-form-input>
           </b-form-group>
           <b-form-group label="이메일" label-for="emailid">
@@ -89,7 +93,6 @@ export default {
       this.modifyMember({
         userId: this.getUserInfo.userId,
         userName: this.getUserInfo.userName,
-        nickName: this.getUserInfo.nickName,
         userPwd: this.getUserInfo.userPwd,
         emailId: this.getUserInfo.emailId,
         emailDomain: this.getUserInfo.emailDomain,
