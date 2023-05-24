@@ -1,15 +1,30 @@
 <template>
   <b-container>
+    <b-row>
+      <b-col class="text-right m-2">
+        <b-button-group>
+          <b-button variant="light" @click="optimize">경로 최적화</b-button>
+          <b-button variant="light" @click="reset">되돌리기</b-button>
+        </b-button-group>
+      </b-col>
+    </b-row>
     <div class="text-center" align-v="center" style="background-color: #f0f2f5">
       <div class="main-timeline-2">
-        <div class="timeline-2 item" :key="place" v-for="place in places">
-          <div class="card p-2" @click="moveCenter(place.lat, place.lon)">
-            <img class="p_img" :src="`${place.img}`" />
-            <div class="card-body p-4">
-              <h4 class="fw-bold mb-4">{{ place.title }}</h4>
-              <p class="text-muted mb-4">
+        <div
+          class="timeline-2 item"
+          :key="index"
+          v-for="(place, index) in ordered"
+        >
+          <div
+            class="card p-2 ml-5 mr-5"
+            @click="moveCenter(ordered[index].lat, ordered[index].lon)"
+          >
+            <img class="p_img" :src="`${ordered[index].img}`" />
+            <div class="card-body p-3">
+              <h4 class="fw-bold">{{ ordered[index].title }}</h4>
+              <p class="text-muted">
                 <i class="far fa-clock" aria-hidden="true"></i
-                >{{ place.address }}
+                >{{ ordered[index].address }}
               </p>
             </div>
           </div>
@@ -20,23 +35,105 @@
 </template>
 
 <script>
-
 export default {
   props: ["places"],
   data: function () {
     return {
       messageWhenNoItems: "There arent items",
+      origin: [],
+      ordered: [],
+      optimized: [],
     };
   },
-  components: {},
-  created() {},
+  methods: {
+    reset() {
+      this.ordered = this.origin;
+    },
+    optimize() {
+      console.log(this.ordered);
+      // TSP 적용
+      const optimized = this.tsp(this.ordered);
+      console.log("opt: ", optimized);
+      this.origin = this.ordered;
+      this.ordered = optimized;
+    },
+    tsp(places) {
+      ///
+      const N = places.length;
+
+      if (N === 0) {
+        return [];
+      }
+
+      const W = new Array(N).fill(0).map(() => new Array(N).fill(0));
+      for (let i = 0; i < N; i++) {
+        for (let j = 0; j < i; j++) {
+          const d = Math.sqrt(
+            Math.pow(places[i].lat - places[j].lat, 2) +
+              Math.pow(places[i].lon - places[j].lon, 2)
+          );
+          W[i][j] = W[j][i] = d;
+        }
+      }
+
+      const INF = 100000000;
+      const dp = new Array(1 << N).fill(0).map(() => new Array(N).fill(-1));
+      const plan = new Array(1 << N).fill(0).map(() => new Array(N));
+
+      for (let i = 0; i < 1 << N; i++) {
+        for (let j = 0; j < N; j++) {
+          dp[i][j] = -1;
+          plan[i][j] = [places[j]];
+        }
+      }
+
+      const algo = (visited, v) => {
+        if (visited === (1 << N) - 1) {
+          return W[v][0];
+        }
+
+        if (dp[visited][v] === -1) {
+          dp[visited][v] = INF;
+          let p = [];
+          for (let i = 0; i < N; i++) {
+            if ((visited & (1 << i)) === 0 && W[v][i] !== INF) {
+              const res = algo(visited | (1 << i), i) + W[v][i];
+              if (res < dp[visited][v]) {
+                dp[visited][v] = res;
+                p = plan[visited | (1 << i)][i];
+              }
+            }
+          }
+
+          plan[visited][v] = plan[visited][v].concat(p);
+        }
+        return dp[visited][v];
+      };
+
+      algo(1, 0);
+
+      return plan[1][0];
+      ///
+    },
+    sortByOrder() {
+      // places order 순으로 다시배열 담기
+      this.ordered = new Array(this.places.length).fill(0);
+      for (let i = 0; i < this.places.length; i++) {
+        this.ordered[this.places[i].order - 1] = this.places[i];
+      }
+      console.log("ordered: ", this.ordered);
+    },
+  },
+  created() {
+    setTimeout(() => this.sortByOrder(), 100);
+  },
 };
 </script>
 
 <style>
 /* The actual timeline (the vertical ruler) */
 .p_img {
-  width: 450px;
+  width: 70%;
   align-self: center;
 }
 .main-timeline-2 {

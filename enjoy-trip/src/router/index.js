@@ -145,6 +145,29 @@ const routes = [
         name: "PlanModify",
         component: () => import("@/components/plan/PlanModify"),
       },
+      {
+        path: "myplan",
+        name: "ListMyPlan",
+        component: () => import("@/components/plan/PlanMyList"),
+      },
+    ],
+  },
+  {
+    path: "/chat",
+    name: "chat",
+    redirect: "/chat/main",
+    component: () => import("@/views/ChatView"),
+    children: [
+      {
+        path: "main",
+        name: "ChatMain",
+        component: () => import("@/components/chat/ChatMain"),
+      },
+      {
+        path: ":no",
+        name: "ChatRoom",
+        component: () => import("@/components/chat/ChatRoom"),
+      },
     ],
   },
 ];
