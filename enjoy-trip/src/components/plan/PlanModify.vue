@@ -120,6 +120,7 @@ import PlanList from "@/components/plan/PlanList.vue";
 export default {
   data: function () {
     return {
+      myplan: null,
       planno: null,
       title: null,
       content: null,
@@ -278,7 +279,6 @@ export default {
         this.endDate = data.endDate;
         this.theme = data.theme;
         this.places = data.places;
-        console.log("1: ", data.places);
         this.$store.state.plan = this.places;
         this.displayMarker();
       }

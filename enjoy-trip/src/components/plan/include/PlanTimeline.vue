@@ -1,15 +1,30 @@
 <template>
   <b-container>
+    <b-row>
+      <b-col class="text-right m-2">
+        <b-button-group>
+          <b-button variant="light" @click="optimize">경로 최적화</b-button>
+          <b-button variant="light">되돌리기</b-button>
+        </b-button-group>
+      </b-col>
+    </b-row>
     <div class="text-center" align-v="center" style="background-color: #f0f2f5">
       <div class="main-timeline-2">
-        <div class="timeline-2 item" :key="place" v-for="place in places">
-          <div class="card p-2" @click="moveCenter(place.lat, place.lon)">
-            <img class="p_img" :src="`${place.img}`" />
+        <div
+          class="timeline-2 item"
+          :key="index"
+          v-for="(place, index) in ordered"
+        >
+          <div
+            class="card p-2"
+            @click="moveCenter(ordered[index].lat, ordered[index].lon)"
+          >
+            <img class="p_img" :src="`${ordered[index].img}`" />
             <div class="card-body p-4">
-              <h4 class="fw-bold mb-4">{{ place.title }}</h4>
+              <h4 class="fw-bold mb-4">{{ ordered[index].title }}</h4>
               <p class="text-muted mb-4">
                 <i class="far fa-clock" aria-hidden="true"></i
-                >{{ place.address }}
+                >{{ ordered[index].address }}
               </p>
             </div>
           </div>
@@ -20,23 +35,38 @@
 </template>
 
 <script>
-
 export default {
   props: ["places"],
   data: function () {
     return {
       messageWhenNoItems: "There arent items",
+      ordered: [],
     };
   },
-  components: {},
-  created() {},
+  methods: {
+    optimize() {
+      console.log(this.ordered);
+      // TSP 적용
+    },
+    sortByOrder() {
+      // places order 순으로 다시배열 담기
+      this.ordered = new Array(this.places.length).fill(0);
+      for (let i = 0; i < this.places.length; i++) {
+        this.ordered[this.places[i].order - 1] = this.places[i];
+      }
+      console.log("ordered: ", this.ordered);
+    },
+  },
+  created() {
+    setTimeout(() => this.sortByOrder(), 100);
+  },
 };
 </script>
 
 <style>
 /* The actual timeline (the vertical ruler) */
 .p_img {
-  width: 450px;
+  width: 100%;
   align-self: center;
 }
 .main-timeline-2 {
