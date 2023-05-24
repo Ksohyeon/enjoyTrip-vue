@@ -152,6 +152,24 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/chat",
+    name: "chat",
+    redirect: "/chat/main",
+    component: () => import("@/views/ChatView"),
+    children: [
+      {
+        path: "main",
+        name: "ChatMain",
+        component: () => import("@/components/chat/ChatMain"),
+      },
+      {
+        path: ":no",
+        name: "ChatRoom",
+        component: () => import("@/components/chat/ChatRoom"),
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({
