@@ -2,12 +2,16 @@
   <div>
     <h2 class="text-center">{{ roomname }}의 채팅방</h2>
     <div class="chat">
-      <div v-for="(item, idx) in recvList" :key="idx">
-        <h3 :class="{ mytext: item.userId === userId }">
-          {{ item.userNickName }} : {{ item.message }}
-        </h3>
+      <div class="chat-box" ref="container">
+        <div v-for="(item, idx) in recvList" :key="idx" :class="{'chat-line': true, 'justify-content-end': item.userId === userId, 'justify-content-start' : item.userId !== userId}">
+            
+          <div class="chat-bubble">
+            <p v-if="item.userId !== userId" class="nickname">{{ item.userNickName }}</p> 
+            {{ item.message }}
+          </div>
+        </div>
       </div>
-      내용: <input v-model="message" type="text" @keyup="sendMessage" />
+      <b-form-input v-model="message" type="text" @keyup="sendMessage" />
     </div>
   </div>
 </template>
@@ -28,6 +32,9 @@ export default {
       recvList: [],
     };
   },
+  updated() {
+    this.scrollDown();
+  },
   created() {
     // App.vue가 생성되면 소켓 연결을 시도합니다.
     this.connect();
@@ -43,6 +50,10 @@ export default {
     });
   },
   methods: {
+    scrollDown() {
+      const container = this.$refs.container;
+      container.scrollTop = container.scrollHeight;
+    },
     sendMessage(e) {
       if (e.keyCode === 13 && this.userName !== "" && this.message !== "") {
         this.send();
@@ -108,12 +119,40 @@ export default {
 }
 .chat {
   margin: 3rem 3rem 3rem 3rem;
-  padding: 1rem 1rem 1rem 1rem;
-  border: 3px solid grey;
+  padding: 2rem 2rem 2rem 2rem;
+  border: 1px solid black;
   box-shadow: 0px 0px 10px 0px #8e8e8e;
   border-radius: 10px;
+  background-color: #d3ebff;
 }
-.mytext {
-  text-align: right;
+.chat-box {
+  margin : 1rem 0rem 1rem 0rem;
+  height: 60vh;
+  background-color: aliceblue;
+  padding : 2rem 1rem 1rem 1rem;
+  border-radius: 2rem;
+  overflow: auto;
+}
+.chat-line {
+  display: flex;
+}
+.chat-bubble {
+  padding : 1rem 1rem 1rem 1rem;
+  border-radius: 2rem;
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px #8e8e8e;
+  max-width: 20rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.nickname {
+  font-weight: bold;
+  text-align: center;
+  font-size: 7px;
+  position: absolute;
+  top:-15px;
+  left:10px;
+
 }
 </style>
