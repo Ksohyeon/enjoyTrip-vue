@@ -87,6 +87,39 @@ const routes = [
     ],
   },
   {
+    path: "/place",
+    name: "place",
+    component: () => import("@/views/PlaceView"),
+    redirect: "/place/list",
+    children: [
+      {
+        path: "list",
+        name: "PlaceList",
+        component: () => import("@/components/place/PlaceList"),
+      },
+      {
+        path: "write",
+        name: "PlaceCreate",
+        component: () => import("@/components/place/PlaceCreate"),
+      },
+      {
+        path: "detail/:no",
+        name: "PlaceDetail",
+        component: () => import("@/components/place/PlaceDetail"),
+      },
+      {
+        path: "modify/:no",
+        name: "PlaceModify",
+        component: () => import("@/components/place/PlaceModify"),
+      },
+      {
+        path: "delete/:no",
+        name: "PlaceDelete",
+        component: () => import("@/components/place/PlaceDelete"),
+      },
+    ],
+  },
+  {
     path: "/plan",
     name: "plan",
     component: () => import("@/views/PlanView"),
@@ -111,6 +144,11 @@ const routes = [
         path: "modify/:no",
         name: "PlanModify",
         component: () => import("@/components/plan/PlanModify"),
+      },
+      {
+        path: "myplan",
+        name: "ListMyPlan",
+        component: () => import("@/components/plan/PlanMyList"),
       },
     ],
   },

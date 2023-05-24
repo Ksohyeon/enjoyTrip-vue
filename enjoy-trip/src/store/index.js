@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     userInfo: null,
     plan: [],
+    myplan: null,
   },
   getters: {
     getUserInfo: function (state) {

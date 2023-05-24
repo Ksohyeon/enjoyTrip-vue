@@ -25,7 +25,7 @@
               src="@/assets/img/plan/planmain2.png"
               width="70%"
             />
-            <b-button class="m-3">
+            <b-button class="m-3" @click="moveMyPlan">
               <b-icon icon="search" font-scale="1" variant="dark"></b-icon>
               나의 여행일정 보기
             </b-button>
@@ -94,6 +94,11 @@ export default {
     moveCreatePlan() {
       this.$router.push({
         name: "PlanCreate",
+      });
+    },
+    moveMyPlan() {
+      this.$router.push({
+        name: "ListMyPlan",
       });
     },
     rowClickListener(row, index) {

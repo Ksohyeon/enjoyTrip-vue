@@ -148,6 +148,9 @@ export default {
       this.showModal = true;
       console.log(item.관광지명);
       this.selectedItem = item;
+      // console.log(item.lat);
+      // console.log(item.lon);
+      // console.log(item.img);
     },
     loadScript() {
       const script = document.createElement("script");
@@ -205,6 +208,9 @@ export default {
           사진: this.searchResult[i].img,
           관광지명: this.searchResult[i].name,
           주소: this.searchResult[i].address,
+          // lat: this.searchResult[i].lat,
+          // lon: this.searchResult[i].lon,
+          // img: this.searchResult[i].img,
           // 정보: this.searchResult[i].overview,
         });
         // console.log(this.searchResult[i].lat,this.searchResult[i].lon);

@@ -12,7 +12,8 @@
 
       <b-navbar-toggle
         target="nav-collapse"
-        style="background-color: #b2ccff"></b-navbar-toggle>
+        style="background-color: #b2ccff"
+      ></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
@@ -33,8 +34,8 @@
           >
           <b-nav-item href="#"
             ><b-icon icon="camera" font-scale="1" variant="dark"></b-icon
-            ><router-link :to="{ name: '' }" class="link"
-              >&#9;핫 플레이스</router-link
+            ><router-link :to="{ name: 'PlaceList' }" class="link"
+              >&#9;마이 플레이스</router-link
             ></b-nav-item
           >
           <b-nav-item href="#"
@@ -47,7 +48,8 @@
             ><b-icon
               icon="patch-question"
               font-scale="1"
-              variant="dark"></b-icon
+              variant="dark"
+            ></b-icon
             ><router-link :to="{ name: 'qna' }" class="link"
               >&#9;QnA</router-link
             ></b-nav-item
