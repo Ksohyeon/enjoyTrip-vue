@@ -4,10 +4,9 @@
       <b-navbar-brand href="#">
         <router-link to="/">
           <img
-            src="@/assets/img/enjoy-trip.png"
-            class="d-inline-block align-middle"
-            width="150px"
-            alt="Kitten" />
+            src="@/assets/img/travelmaker.png"
+            class="d-inline-block align-middle logo"
+            alt="logo" />
         </router-link>
       </b-navbar-brand>
 
@@ -27,8 +26,7 @@
             ><b-icon
               icon="calendar2-check"
               font-scale="1"
-              variant="dark"
-            ></b-icon
+              variant="dark"></b-icon
             ><router-link :to="{ name: 'plan' }" class="link"
               >&#9;일정 만들기</router-link
             ></b-nav-item
@@ -41,7 +39,7 @@
           >
           <b-nav-item href="#"
             ><b-icon icon="chat" font-scale="1" variant="dark"></b-icon
-            ><router-link :to="{ name: '' }" class="link"
+            ><router-link :to="{ name: 'chat' }" class="link"
               >&#9;지역별 채팅방</router-link
             ></b-nav-item
           >
@@ -107,9 +105,10 @@ export default {
   computed: {
     message() {
       let userid = sessionStorage.getItem("userid");
+      let nickname = sessionStorage.getItem("nickname");
       console.log(userid);
       if (userid !== null) {
-        return "안녕하세요 " + userid + " 님";
+        return "안녕하세요 " + nickname + " 님";
       } else {
         return "";
       }
@@ -170,5 +169,9 @@ export default {
   color: black;
   font-weight: bold;
   text-decoration: none;
+}
+.logo {
+  height: 5rem;
+  width: auto;
 }
 </style>

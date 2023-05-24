@@ -34,8 +34,8 @@ export default new Vuex.Store({
       // 세션 스토리지에 로그인 정보 저장
       sessionStorage.setItem("userid", payload.loginuser.userId);
       sessionStorage.setItem("isadmin", payload.loginuser.admin);
+      sessionStorage.setItem("nickname", payload.loginuser.nickName);
       console.log("저장된 유저 아이디: " + sessionStorage.getItem("userid"));
-
       // console.log("state: ", state);
     },
     LOGOUT() {
