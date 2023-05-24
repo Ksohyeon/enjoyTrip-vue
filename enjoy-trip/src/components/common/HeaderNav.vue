@@ -35,8 +35,8 @@
           >
           <b-nav-item href="#"
             ><b-icon icon="camera" font-scale="1" variant="dark"></b-icon
-            ><router-link :to="{ name: '' }" class="link"
-              >&#9;핫 플레이스</router-link
+            ><router-link :to="{ name: 'PlaceList' }" class="link"
+              >&#9;마이 플레이스</router-link
             ></b-nav-item
           >
           <b-nav-item href="#"
