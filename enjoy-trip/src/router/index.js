@@ -112,6 +112,11 @@ const routes = [
         name: "PlanModify",
         component: () => import("@/components/plan/PlanModify"),
       },
+      {
+        path: "myplan",
+        name: "ListMyPlan",
+        component: () => import("@/components/plan/PlanMyList"),
+      },
     ],
   },
 ];
