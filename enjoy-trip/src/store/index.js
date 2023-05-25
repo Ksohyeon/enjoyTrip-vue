@@ -90,6 +90,7 @@ export default new Vuex.Store({
             payload.callback(status, data.userId);
           } else {
             alert("로그인 실패");
+            setTimeout(() => window.location.reload(), 200);
           }
         })
         .catch((response) => {
