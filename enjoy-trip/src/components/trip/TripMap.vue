@@ -59,7 +59,13 @@
         </table>
       </div>
     </div>
-    <b-table striped hover :items="items" @row-clicked="handleRowClick">
+    <b-table
+      striped
+      hover
+      :items="items"
+      :fields="fields"
+      @row-clicked="handleRowClick"
+    >
       <template #cell(사진)="row">
         <img :src="row.item.사진" alt="이미지" width="100" height="100" />
       </template>
@@ -98,6 +104,11 @@ export default {
       markers: [],
       markerPositions: [],
       items: [],
+      fields: [
+        { key: "사진", label: "사진" },
+        { key: "관광지명", label: "설명" },
+        { key: "주소", label: "주소" },
+      ],
     };
   },
   setup() {},
@@ -196,24 +207,27 @@ export default {
       const positions = [];
       this.items = [];
       for (var i = 0; i < this.searchResult.length; i++) {
+        // console.log(this.searchResult[i]);
+        const item = {
+          사진: this.searchResult[i].img,
+          관광지명: this.searchResult[i].name,
+          주소: this.searchResult[i].address,
+          설명: this.searchResult[i].overView,
+          // lat: this.searchResult[i].lat,
+          // lon: this.searchResult[i].lon,
+          // img: this.searchResult[i].img,
+          // 정보: this.searchResult[i].overview,
+        };
+        this.items.push(item);
+        // console.log(this.searchResult[i].lat,this.searchResult[i].lon);
         positions.push({
           title: this.searchResult[i].name,
           latlng: new window.kakao.maps.LatLng(
             this.searchResult[i].lat,
             this.searchResult[i].lon
           ),
+          item: item,
         });
-        // console.log(this.searchResult[i]);
-        this.items.push({
-          사진: this.searchResult[i].img,
-          관광지명: this.searchResult[i].name,
-          주소: this.searchResult[i].address,
-          // lat: this.searchResult[i].lat,
-          // lon: this.searchResult[i].lon,
-          // img: this.searchResult[i].img,
-          // 정보: this.searchResult[i].overview,
-        });
-        // console.log(this.searchResult[i].lat,this.searchResult[i].lon);
       }
       if (positions.length > 0) {
         this.markers = positions.map((position) => {
@@ -221,6 +235,11 @@ export default {
             map: this.map,
           });
           marker.setPosition(position.latlng);
+
+          window.kakao.maps.event.addListener(marker, "click", () => {
+            this.handleRowClick(position.item);
+          });
+
           return marker;
         });
       }

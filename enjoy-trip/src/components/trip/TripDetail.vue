@@ -10,7 +10,12 @@
     >
       <div class="d-flex justify-content-start">
         <img :src="selectedItem.사진" alt="이미지" width="800" height="500" />
-        <p>주소 : {{ selectedItem.주소 }}</p>
+        <div>
+          <span>주소 : {{ selectedItem.주소 }}</span>
+          <br />
+          <br />
+          <span>설명 : {{ selectedItem.설명 }}</span>
+        </div>
       </div>
       <!-- <div>
       </div> -->
