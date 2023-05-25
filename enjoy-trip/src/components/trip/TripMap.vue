@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="col-md-9">
+  <div class="grandparent">
+    <div class="parent-container">
       <div class="alert alert-primary mt-3 text-center fw-bold" role="alert">
         전국 관광지 정보
       </div>
@@ -42,7 +42,7 @@
         </b-button>
       </form>
       <!-- kakao map start -->
-      <div id="map" class="mt-3" style="width: 100%; height: 400px"></div>
+      <div id="map" class="mt-3" style="width: 100%; height: 550px"></div>
       <!-- kakao map end -->
       <div class="row">
         <table class="table table-striped" style="display: none">
@@ -59,9 +59,28 @@
         </table>
       </div>
     </div>
-    <b-table striped hover :items="items" @row-clicked="handleRowClick">
+    <b-table
+      striped
+      hover
+      :items="items"
+      :fields="fields"
+      @row-clicked="handleRowClick"
+    >
       <template #cell(사진)="row">
-        <img :src="row.item.사진" alt="이미지" width="100" height="100" />
+        <img
+          v-if="row.item.사진 !== ''"
+          :src="row.item.사진"
+          alt="이미지"
+          width="100"
+          height="100"
+        />
+        <img
+          v-else
+          src="@/assets/img/no_image.jpg"
+          alt="이미지 없음"
+          width="100"
+          height="100"
+        />
       </template>
     </b-table>
     <TripDetail
@@ -77,6 +96,15 @@
 #map {
   width: 100%;
   height: 400px;
+}
+.grandparent {
+  margin: 1rem 10rem 1rem 10rem;
+}
+.parent-container {
+  width: 100%;
+}
+button {
+  min-width: 5rem;
 }
 </style>
 
@@ -98,6 +126,11 @@ export default {
       markers: [],
       markerPositions: [],
       items: [],
+      fields: [
+        { key: "사진", label: "사진" },
+        { key: "관광지명", label: "설명" },
+        { key: "주소", label: "주소" },
+      ],
     };
   },
   setup() {},
@@ -196,24 +229,27 @@ export default {
       const positions = [];
       this.items = [];
       for (var i = 0; i < this.searchResult.length; i++) {
+        // console.log(this.searchResult[i]);
+        const item = {
+          사진: this.searchResult[i].img,
+          관광지명: this.searchResult[i].name,
+          주소: this.searchResult[i].address,
+          설명: this.searchResult[i].overView,
+          // lat: this.searchResult[i].lat,
+          // lon: this.searchResult[i].lon,
+          // img: this.searchResult[i].img,
+          // 정보: this.searchResult[i].overview,
+        };
+        this.items.push(item);
+        // console.log(this.searchResult[i].lat,this.searchResult[i].lon);
         positions.push({
           title: this.searchResult[i].name,
           latlng: new window.kakao.maps.LatLng(
             this.searchResult[i].lat,
             this.searchResult[i].lon
           ),
+          item: item,
         });
-        // console.log(this.searchResult[i]);
-        this.items.push({
-          사진: this.searchResult[i].img,
-          관광지명: this.searchResult[i].name,
-          주소: this.searchResult[i].address,
-          // lat: this.searchResult[i].lat,
-          // lon: this.searchResult[i].lon,
-          // img: this.searchResult[i].img,
-          // 정보: this.searchResult[i].overview,
-        });
-        // console.log(this.searchResult[i].lat,this.searchResult[i].lon);
       }
       if (positions.length > 0) {
         this.markers = positions.map((position) => {
@@ -221,6 +257,11 @@ export default {
             map: this.map,
           });
           marker.setPosition(position.latlng);
+
+          window.kakao.maps.event.addListener(marker, "click", () => {
+            this.handleRowClick(position.item);
+          });
+
           return marker;
         });
       }

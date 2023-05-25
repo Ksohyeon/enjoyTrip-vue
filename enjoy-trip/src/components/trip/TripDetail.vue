@@ -9,8 +9,26 @@
       @close="closeModal"
     >
       <div class="d-flex justify-content-start">
-        <img :src="selectedItem.사진" alt="이미지" width="800" height="500" />
-        <p>주소 : {{ selectedItem.주소 }}</p>
+        <img
+          v-if="selectedItem.사진 !== ''"
+          :src="selectedItem.사진"
+          alt="이미지"
+          width="100%"
+          height="auto"
+        />
+        <img
+          v-else
+          src="@/assets/img/no_image.jpg"
+          alt="이미지 없음"
+          width="100%"
+          height="auto"
+        />
+      </div>
+      <div>
+        <span>주소 : {{ selectedItem.주소 }}</span>
+        <br />
+        <br />
+        <span>설명 : {{ selectedItem.설명 }}</span>
       </div>
       <!-- <div>
       </div> -->
@@ -19,6 +37,14 @@
   </b-container>
 </template>
 
+<style>
+.modal-image {
+  max-width: 100%;
+  max-height: 500px;
+  min-width: 100%;
+  min-height: 100%;
+}
+</style>
 <script>
 export default {
   name: "TripDetail",
