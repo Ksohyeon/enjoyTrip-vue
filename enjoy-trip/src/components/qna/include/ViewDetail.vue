@@ -3,10 +3,14 @@
     <b-col>
       <b-card border-variant="dark" no-body>
         <b-card-header class="text-center">
-          <h5>({{ qna.no }})</h5>
-          <h3>{{ qna.title }}</h3>
-          <h6>{{ qna.author.nickName }}</h6>
-          <h6>{{ qna.createdAt }}</h6>
+          <h3 class="text-f">
+            {{ qna.title }}
+            <p style="font-size: 12px">no : {{ qna.no }}</p>
+          </h3>
+          <h6 class="text-f">
+            <p>작성자 : {{ qna.author.nickName }}</p>
+            <p>{{ qna.createdAt }}</p>
+          </h6>
         </b-card-header>
         <b-card-body class="text-left">
           <div :inner-html.prop="qna.content | enterToBr"></div>
@@ -24,4 +28,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.text-f {
+  display: flex;
+  justify-content: space-between;
+}
+.card-body {
+  min-height: 40vh;
+}
+</style>
