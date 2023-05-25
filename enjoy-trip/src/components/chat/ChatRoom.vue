@@ -1,8 +1,17 @@
 <template>
   <div>
-    내용: <input v-model="message" type="text" @keyup="sendMessage" />
-    <div v-for="(item, idx) in recvList" :key="idx">
-      <h3>{{ item.userNickName }} : {{ item.message }}</h3>
+    <h2 class="text-center">{{ roomname }}의 채팅방</h2>
+    <div class="chat">
+      <div class="chat-box" ref="container">
+        <div v-for="(item, idx) in recvList" :key="idx" :class="{'chat-line': true, 'justify-content-end': item.userId === userId, 'justify-content-start' : item.userId !== userId}">
+            
+          <div class="chat-bubble">
+            <p v-if="item.userId !== userId" class="nickname">{{ item.userNickName }}</p> 
+            {{ item.message }}
+          </div>
+        </div>
+      </div>
+      <b-form-input v-model="message" type="text" @keyup="sendMessage" />
     </div>
   </div>
 </template>
@@ -19,14 +28,20 @@ export default {
       userNickName: "익명의 유저",
       message: "",
       roomno: null,
+      roomname: null,
       recvList: [],
     };
+  },
+  updated() {
+    this.scrollDown();
   },
   created() {
     // App.vue가 생성되면 소켓 연결을 시도합니다.
     this.connect();
     this.roomno = this.$route.params.no;
-    console.log("방번호 :" + this.roomno);
+    this.roomname = this.$route.params.name;
+    this.userId = sessionStorage.getItem("userid");
+    this.userNickName = sessionStorage.getItem("nickname");
     http.get(`/chat/${this.roomno}`).then(({ status, data }) => {
       if (status == 200) {
         this.recvList = data;
@@ -35,6 +50,10 @@ export default {
     });
   },
   methods: {
+    scrollDown() {
+      const container = this.$refs.container;
+      container.scrollTop = container.scrollHeight;
+    },
     sendMessage(e) {
       if (e.keyCode === 13 && this.userName !== "" && this.message !== "") {
         this.send();
@@ -46,9 +65,6 @@ export default {
       console.log("세션 : " + sessionStorage.getItem("nickname"));
       if (sessionStorage.getItem("userid") != null) {
         if (this.stompClient && this.stompClient.connected) {
-          this.userId = sessionStorage.getItem("userid");
-          this.userNickName = sessionStorage.getItem("nickname");
-
           const msg = {
             userId: this.userId,
             userNickName: this.userNickName,
@@ -95,3 +111,48 @@ export default {
   },
 };
 </script>
+<style scoped>
+.middle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chat {
+  margin: 3rem 3rem 3rem 3rem;
+  padding: 2rem 2rem 2rem 2rem;
+  border: 1px solid black;
+  box-shadow: 0px 0px 10px 0px #8e8e8e;
+  border-radius: 10px;
+  background-color: #d3ebff;
+}
+.chat-box {
+  margin : 1rem 0rem 1rem 0rem;
+  height: 60vh;
+  background-color: aliceblue;
+  padding : 2rem 1rem 1rem 1rem;
+  border-radius: 2rem;
+  overflow: auto;
+}
+.chat-line {
+  display: flex;
+}
+.chat-bubble {
+  padding : 1rem 1rem 1rem 1rem;
+  border-radius: 2rem;
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px #8e8e8e;
+  max-width: 20rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.nickname {
+  font-weight: bold;
+  text-align: center;
+  font-size: 7px;
+  position: absolute;
+  top:-15px;
+  left:10px;
+
+}
+</style>

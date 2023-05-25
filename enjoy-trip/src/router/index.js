@@ -164,7 +164,7 @@ const routes = [
         component: () => import("@/components/chat/ChatMain"),
       },
       {
-        path: ":no",
+        path: ":no/:name",
         name: "ChatRoom",
         component: () => import("@/components/chat/ChatRoom"),
       },
