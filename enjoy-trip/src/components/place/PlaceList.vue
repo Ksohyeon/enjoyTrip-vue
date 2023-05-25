@@ -26,7 +26,7 @@
             :img-src="require(`@/assets/uploads/${place.image}`)"
             img-alt="Image"
             img-top
-            class="mb-2 img-fluid"
+            class="mb-2 img-fluid card"
             tag="article"
             style="max-width: 20rem"
             @click="handleCardClick(place)"
@@ -46,6 +46,13 @@
     <div v-if="places.length === 0" class="text-center">게시글이 없습니다.</div>
   </b-container>
 </template>
+
+<style>
+.card {
+  min-width: 253px;
+  min-height: 355px;
+}
+</style>
 
 <script>
 import http from "@/util/http-common";

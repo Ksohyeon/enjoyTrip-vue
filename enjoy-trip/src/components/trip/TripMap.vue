@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="col-md-9">
+  <div class="grandparent">
+    <div class="parent-container">
       <div class="alert alert-primary mt-3 text-center fw-bold" role="alert">
         전국 관광지 정보
       </div>
@@ -42,7 +42,7 @@
         </b-button>
       </form>
       <!-- kakao map start -->
-      <div id="map" class="mt-3" style="width: 100%; height: 400px"></div>
+      <div id="map" class="mt-3" style="width: 100%; height: 550px"></div>
       <!-- kakao map end -->
       <div class="row">
         <table class="table table-striped" style="display: none">
@@ -67,7 +67,20 @@
       @row-clicked="handleRowClick"
     >
       <template #cell(사진)="row">
-        <img :src="row.item.사진" alt="이미지" width="100" height="100" />
+        <img
+          v-if="row.item.사진 !== ''"
+          :src="row.item.사진"
+          alt="이미지"
+          width="100"
+          height="100"
+        />
+        <img
+          v-else
+          src="@/assets/img/no_image.jpg"
+          alt="이미지 없음"
+          width="100"
+          height="100"
+        />
       </template>
     </b-table>
     <TripDetail
@@ -83,6 +96,15 @@
 #map {
   width: 100%;
   height: 400px;
+}
+.grandparent {
+  margin: 1rem 10rem 1rem 10rem;
+}
+.parent-container {
+  width: 100%;
+}
+button {
+  min-width: 5rem;
 }
 </style>
 
