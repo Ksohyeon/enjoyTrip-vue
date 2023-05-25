@@ -42,7 +42,7 @@
     </b-row>
     <b-row>
       <b-col class="text-center pb-2 pt-5">
-        <h4>타임라인</h4>
+        <h3>타임라인</h3>
       </b-col>
     </b-row>
     <b-row>
