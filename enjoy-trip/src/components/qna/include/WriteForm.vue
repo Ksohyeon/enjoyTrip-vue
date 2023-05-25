@@ -13,16 +13,14 @@
             id="title-group"
             label="제목:"
             label-for="title"
-            description="제목을 입력하세요."
-          >
+            description="제목을 입력하세요.">
             <b-form-input
               id="title"
               ref="title"
               v-model="title"
               type="text"
               required
-              placeholder="제목 입력..."
-            />
+              placeholder="제목 입력..." />
           </b-form-group>
           <b-form-select v-model="category" :options="options"></b-form-select>
           <b-form-group
@@ -30,15 +28,13 @@
             id="content-group"
             label="내용:"
             label-for="content"
-            ref="content"
-          >
+            ref="content">
             <b-form-textarea
               id="content"
               v-model="content"
               placeholder="내용 입력..."
               rows="10"
-              max-rows="15"
-            ></b-form-textarea>
+              max-rows="15"></b-form-textarea>
           </b-form-group>
 
           <b-button
@@ -71,12 +67,14 @@ export default {
     return {
       userId: sessionStorage.getItem("userid"),
       title: "",
-      category: "",
+      category: null,
       content: "",
       options: [
         { value: null, text: "카테고리를 선택하세요" },
-        { value: "1", text: "1" },
-        { value: "2", text: "2" },
+        { value: "사이트이용", text: "사이트이용" },
+        { value: "여행", text: "여행" },
+        { value: "회원", text: "회원" },
+        { value: "기타", text: "기타" },
       ],
     };
   },

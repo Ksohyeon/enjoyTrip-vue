@@ -6,11 +6,11 @@
     <b-container class="middle">
       <b-row class="middle">
         <b-col v-for="item in sido" :key="item.code" sm-cols="4" class="middle">
-          <b-card
-            :title="item.name"
+          <div
             @click="handleButtonClick(item.code, item.name)"
-            class="middle">
-          </b-card>
+            class="middle chat-card">
+            <p class="room-title">{{ item.name }}</p>
+          </div>
         </b-col>
       </b-row>
     </b-container>
@@ -51,19 +51,22 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.card {
+.chat-card {
   border-radius: 1rem;
   box-shadow: 0px 0px 10px 0px #8e8e8e;
   cursor: pointer;
   transition: transform 1s ease;
   width: 14rem;
+  height: 6rem;
   margin: 1rem;
   padding: 1rem 0rem 1rem 0rem;
 }
-.card-title {
+.room-title {
   margin-bottom: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
-.card:hover {
+.chat-card:hover {
   transform: scale(1.1);
 }
 .chatmain {

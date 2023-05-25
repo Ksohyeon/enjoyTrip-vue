@@ -19,8 +19,7 @@
       head-variant="dark"
       :items="qnas"
       :fields="fields"
-      @row-clicked="rowClickListener"
-    ></b-table>
+      @row-clicked="rowClickListener"></b-table>
     <div v-else class="text-center">게시글이 없습니다.</div>
   </b-container>
 </template>
@@ -49,8 +48,8 @@ export default {
           sortable: true,
         },
         {
-          key: "content",
-          label: "내용",
+          key: "author.nickName",
+          label: "작성자",
           sortable: true,
         },
         {
@@ -79,11 +78,6 @@ export default {
       if (status == 200) {
         this.qnas = data;
         console.log(data);
-
-        let i = 0;
-        for (let qna of this.qnas) {
-          qna.no = ++i;
-        }
       }
     });
     console.log(this.qnas);
