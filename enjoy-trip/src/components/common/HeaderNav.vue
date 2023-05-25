@@ -137,15 +137,14 @@ export default {
     },
     logout() {
       console.log("logout method 실행");
-      let thiz = this;
+      // let thiz = this;
       this.logoutMember({
         callback: function (status) {
           console.log(status);
           if (status == 200) {
-            thiz.$router.push({ name: "main" });
             setTimeout(() => {
               window.location.reload();
-            }, 300);
+            }, 200);
           }
         },
       });

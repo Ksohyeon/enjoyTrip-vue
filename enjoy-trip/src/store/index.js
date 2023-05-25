@@ -10,6 +10,7 @@ export default new Vuex.Store({
     userInfo: null,
     plan: [],
     myplan: null,
+    ordered: [],
   },
   getters: {
     getUserInfo: function (state) {
@@ -17,6 +18,10 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    // 여행경로 저장
+    SET_ORDERED(state, ordered) {
+      state.ordered = ordered;
+    },
     // 여행계획
     CREATE_PLAN_ITEM(state, planItem) {
       console.log(planItem);
@@ -48,6 +53,11 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    // 여행경로 저장
+    setOrdered(context, ordered) {
+      console.log("serOrdered: ", ordered);
+      context.commit("SET_ORDERED", ordered);
+    },
     // 여행계획 등록
     registPlan(content, planToRegist) {
       console.log(planToRegist);
@@ -71,12 +81,17 @@ export default new Vuex.Store({
         .post(`/user/login`, payload)
         .then(({ data, status }) => {
           console.log("응답: ", data, status);
-          context.commit({
-            type: "LOGIN",
-            loginuser: data,
-          });
-          this.state.userId = data.userId;
-          payload.callback(status, data.userId);
+          if (status == 200) {
+            context.commit({
+              type: "LOGIN",
+              loginuser: data,
+            });
+            this.state.userId = data.userId;
+            payload.callback(status, data.userId);
+          } else {
+            alert("로그인 실패");
+            setTimeout(() => window.location.reload(), 200);
+          }
         })
         .catch((response) => {
           payload.callback(response.status);
@@ -100,6 +115,7 @@ export default new Vuex.Store({
         context.commit({
           type: "LOGOUT",
         });
+        console.log(response, payload);
         // console.log("status: ", status);
         payload.callback(response.status);
       });

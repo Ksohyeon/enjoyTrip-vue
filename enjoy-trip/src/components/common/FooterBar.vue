@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <!-- <p>TRAVEL MAKER</p> -->
+    <p><span>TRAVEL MAKER</span></p>
   </div>
 </template>
 
@@ -11,5 +11,10 @@ export default {};
 <style>
 .footer {
   background-color: rgb(207, 207, 207);
+  bottom: 0;
+  height: 65px;
+}
+.footer p {
+  text-align: right;
 }
 </style>

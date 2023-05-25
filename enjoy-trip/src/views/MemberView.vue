@@ -1,14 +1,21 @@
 <template>
   <div>
-    <router-view></router-view>
+    <router-view class="memberview"></router-view>
+    <footer-bar></footer-bar>
   </div>
 </template>
 
 <script>
 export default {
   name: "MemberView",
-  components: {},
+  components: {
+    "footer-bar": () => import("@/components/common/FooterBar.vue"),
+  },
 };
 </script>
 
-<style></style>
+<style>
+.memberview {
+  height: 82vh;
+}
+</style>
