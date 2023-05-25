@@ -15,4 +15,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+template {
+  height: 100vh;
+}
+</style>

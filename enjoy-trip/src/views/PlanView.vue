@@ -1,13 +1,16 @@
 <template>
   <div>
-    <router-view></router-view>
+    <router-view class="planview"></router-view>
+    <footer-bar></footer-bar>
   </div>
 </template>
 
 <script>
 export default {
   name: "TripView",
-  components: {},
+  components: {
+    "footer-bar": () => import("@/components/common/FooterBar.vue"),
+  },
   data() {
     return {};
   },
@@ -16,4 +19,7 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.planview {
+}
+</style>

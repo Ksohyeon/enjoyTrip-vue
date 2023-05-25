@@ -29,19 +29,14 @@ export default {
 </script>
 
 <style scoped>
-html,
-body,
 template,
 .div {
-  height: 100%;
+  /* height: 100vh; */
 }
 .container {
   background: center;
-  height: 40vh; /* 이미지의 높이를 조정할 수 있음 */
+  height: 82vh; /* 이미지의 높이를 조정할 수 있음 */
   background-repeat: no-repeat; /* 이미지 반복 없음 */
   background-size: cover;
-  height: 100%;
-}
-.footer {
 }
 </style>

@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   props: ["places"],
   data: function () {
@@ -46,8 +47,11 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["setOrdered"]),
     reset() {
       this.ordered = this.origin;
+      this.setOrdered(this.ordered);
+      this.$emit("reloadMarker");
     },
     optimize() {
       console.log(this.ordered);
@@ -56,6 +60,8 @@ export default {
       console.log("opt: ", optimized);
       this.origin = this.ordered;
       this.ordered = optimized;
+      this.setOrdered(this.ordered);
+      this.$emit("reloadMarker");
     },
     tsp(places) {
       ///
@@ -111,6 +117,7 @@ export default {
       };
 
       algo(1, 0);
+      console.log("tsp: ", plan[1][0]);
 
       return plan[1][0];
       ///
@@ -121,12 +128,14 @@ export default {
       for (let i = 0; i < this.places.length; i++) {
         this.ordered[this.places[i].order - 1] = this.places[i];
       }
-      console.log("ordered: ", this.ordered);
+      this.setOrdered(this.ordered);
+      // console.log("ordered: ", this.ordered);
     },
   },
   created() {
     setTimeout(() => this.sortByOrder(), 100);
   },
+  computed: {},
 };
 </script>
 
